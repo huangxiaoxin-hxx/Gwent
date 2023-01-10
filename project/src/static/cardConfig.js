@@ -29,4 +29,11 @@ const campList = [
   },
 ]
 
-const neutralCardGroup = []
+const neutralCardGroup = [
+  {
+    combat: 0,
+    position: 'center',
+    type: 'exchange',
+    name: '诱饵'
+  }
+]
