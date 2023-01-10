@@ -11,12 +11,20 @@ const routes = [
     component: JoinGame
   },
   {
-    path: '/about',
-    name: 'About',
+    path: '/battle',
+    name: 'Battle',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Battle/index.vue')
+  },
+  {
+    path: '/selectCard',
+    name: 'SelectCard',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/SelectCard/index.vue')
   }
 ]
 
