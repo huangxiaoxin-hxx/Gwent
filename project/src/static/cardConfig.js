@@ -41,7 +41,8 @@ export const typeList = {
   spy:          {type: 'Spy', desc: '将此牌投放至敌方战场，我方多抽两张牌' },
   hornMan:      {type: 'HornMan', desc: '除自己外，同排非英雄战力翻倍'},
   burnMan:      {type: 'BurnMan', desc: '敌方同排战斗力大于10时，损毁敌方该排最强战力'},
-  compatriots:  {type: 'Compatriots', desc: '相同卡战斗力翻倍'}
+  compatriots:  {type: 'Compatriots', desc: '相同卡战斗力翻倍'},
+  siegeHornMan: {type: 'SiegeHornMan', desc: '攻城号角'}
 }
 
 export const neutralCardGroup = [
@@ -401,4 +402,32 @@ export const abilityType = {
   HornMan:      '气势',
   BurnMan:      '灼烧',
   Compatriots:  '同胞之情'
+}
+
+export const kingGroup = {
+  North: [
+    {
+      id: 'north1',
+      type: typeList.sunny.type,
+      name: '北方的指挥领主',
+      fieldSelect: true,
+      desc: typeList.sunny.desc
+    },
+    {
+      id: 'north2',
+      position: 'king',
+      type: typeList.fog.type,
+      name: '泰莫利亚之王',
+      fieldSelect: true,
+      desc: typeList.fog.desc
+    },
+    {
+      id: 'north3',
+      position: 'king',
+      type: typeList.siegeHornMan.type,
+      name: '攻城之王弗尔泰斯特',
+      fieldSelect: true,
+      desc: typeList.siegeHornMan.desc
+    }
+  ]
 }

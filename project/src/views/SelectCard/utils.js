@@ -11,3 +11,10 @@ export const judgeCardGroup = (comp) => {
       return 'squirrelCardGroup'
   }
 }
+
+export const calculateSpecialNumber = (list) => {
+  const specialList = list.filter(item => {
+    return item.combat === null
+  })
+  return specialList.length
+}

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { Button, Input, Form, FormItem, RadioGroup, RadioButton, Dialog, Popover } from 'element-ui';
+import { Button, Input, Form, FormItem, RadioGroup, RadioButton, Dialog, Popover, Carousel, CarouselItem } from 'element-ui';
 import GoEasy from 'goeasy';
 import 'element-ui/lib/theme-chalk/index.css';
 import './index.css'
@@ -24,6 +24,8 @@ Vue.component(RadioGroup.name, RadioGroup);
 Vue.component(RadioButton.name, RadioButton);
 Vue.component(Dialog.name, Dialog)
 Vue.component(Popover.name, Popover)
+Vue.component(Carousel.name, Carousel)
+Vue.component(CarouselItem.name, CarouselItem)
 
 new Vue({
   router,

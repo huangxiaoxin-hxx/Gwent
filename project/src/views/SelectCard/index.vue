@@ -17,12 +17,25 @@
         <Card v-for="(item, index) in selectCardGroup" :key="index" :cardData="item" statue="group" @takeOutGroup="takeOutGroup" />
       </div>
     </div>
+    <div class="w-72 left-1/2 absolute top-36 king bottom-0">
+      <el-carousel height="360px" arrow="always" :autoplay="false" @change="onChange">
+        <el-carousel-item v-for="item in curKingGroup" :key="item.id">
+          <img class="h-80 m-auto mb-5"  :src="require(`@/static/${item.id}.jpeg`)">
+        </el-carousel-item>
+      </el-carousel>
+      <div class="absolute bg-white text-sm z-50 w-full desc h-8 leading-8">{{ king.desc }}</div>
+      <div class=" mt-10">单位牌数量： <span :class="rule.unitNumber < 22 && 'text-red-600'">{{ rule.unitNumber }}</span>/22</div>
+      <div>特殊牌数量： <span :class="rule.specialNumber > 10 && 'text-red-600'">{{ rule.specialNumber }}</span>/10</div>
+      <div class="absolute bottom-20 w-full">
+        <el-button type="success" :disabled="ableBegin">开始游戏</el-button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { campList, camp, neutralCardGroup, NorthCardGroup } from '@/static/cardConfig'
-import { judgeCardGroup } from './utils' 
+import { campList, camp, neutralCardGroup, NorthCardGroup, kingGroup } from '@/static/cardConfig'
+import { judgeCardGroup, calculateSpecialNumber } from './utils' 
 import Card from '@/components/Card.vue'
 export default {
   name: 'SelectCard',
@@ -33,9 +46,14 @@ export default {
     return {
       campList: campList,
       camp: camp.north,
-      neutralCardGroup: neutralCardGroup,
       northCardGroup: neutralCardGroup.concat(NorthCardGroup),
-      selectCardGroup: []
+      kingGroup: kingGroup,
+      selectCardGroup: [],
+      king: kingGroup[camp.north][0],
+      rule: {
+        unitNumber: 0, // 单位牌 >= 22
+        specialNumber: 0, // 特殊卡 <= 10
+      }
     }
   },
   computed: {
@@ -52,12 +70,20 @@ export default {
     curCardGroupList() {
       const group = judgeCardGroup(this.camp)
       return this[group]
+    },
+    curKingGroup() {
+      return this.kingGroup[this.camp]
+    },
+    ableBegin() {
+      if(this.rule.specialNumber <= 10 && this.rule.unitNumber >= 22) {
+        return false
+      }
+      return true
     }
   },
   methods: {
     joinGroup(data) {
       this.selectCardGroup.push(data)
-      
       const index = this[this.curCardGroup].indexOf(data)
       this[this.curCardGroup].splice(index, 1)
     },
@@ -65,7 +91,27 @@ export default {
       this[this.curCardGroup].push(data)
       const index = this.selectCardGroup.indexOf(data)
       this.selectCardGroup.splice(index, 1)
+    },
+    onChange(data) {
+      console.log(data)
+      this.king = this.kingGroup[this.camp][data]
+    }
+  },
+  watch: {
+    selectCardGroup(val) {
+      const specialCount = calculateSpecialNumber(val)
+      this.rule.specialNumber = specialCount
+      this.rule.unitNumber = val.length - specialCount
     }
   }
 }
 </script>
+
+<style>
+.king {
+  transform: translateX(-50%);
+}
+.king .desc {
+  top: 340px
+}
+</style>
