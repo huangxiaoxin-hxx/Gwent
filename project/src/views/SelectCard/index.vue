@@ -13,7 +13,7 @@
       <div class="absolute w-5/12 top-36 bottom-0 overflow-scroll left-0 flex justify-start flex-wrap">
         <Card v-for="(item, index) in curCardGroupList" :key="index" :cardData="item" statue="other" @joinGroup="joinGroup" />
       </div>
-      <div class="absolute w-5/12 top-36 bottom-0 overflow-scroll right-0">
+      <div class="absolute w-5/12 top-36 bottom-0 overflow-scroll right-0 flex justify-end flex-wrap">
         <Card v-for="(item, index) in selectCardGroup" :key="index" :cardData="item" statue="group" @takeOutGroup="takeOutGroup" />
       </div>
     </div>
@@ -23,7 +23,7 @@
           <img class="h-80 m-auto mb-5"  :src="require(`@/static/${item.id}.jpeg`)">
         </el-carousel-item>
       </el-carousel>
-      <div class="absolute bg-white text-sm z-50 w-full desc h-8 leading-8">{{ king.desc }}</div>
+      <div class="absolute bg-white text-sm z-50 w-72 desc h-8 leading-8">{{ king.desc }}</div>
       <div class=" mt-10">单位牌数量： <span :class="rule.unitNumber < 22 && 'text-red-600'">{{ rule.unitNumber }}</span>/22</div>
       <div>特殊牌数量： <span :class="rule.specialNumber > 10 && 'text-red-600'">{{ rule.specialNumber }}</span>/10</div>
       <div class="absolute bottom-20 w-full">
