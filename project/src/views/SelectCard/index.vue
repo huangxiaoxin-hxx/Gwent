@@ -37,6 +37,7 @@
 import { campList, camp, neutralCardGroup, NorthCardGroup, kingGroup } from '@/static/cardConfig'
 import { judgeCardGroup, calculateSpecialNumber } from './utils' 
 import Card from '@/components/Card.vue'
+import { setLocalItem, getLocalItem } from '@/indexDB'
 export default {
   name: 'SelectCard',
   components: {
@@ -47,6 +48,7 @@ export default {
       campList: campList,
       camp: camp.north,
       northCardGroup: neutralCardGroup.concat(NorthCardGroup),
+      nilfgaardianCardGroup: neutralCardGroup,
       kingGroup: kingGroup,
       selectCardGroup: [],
       king: kingGroup[camp.north][0],
@@ -82,27 +84,43 @@ export default {
     }
   },
   methods: {
+    setStoreData() {
+      setLocalItem('group', this.camp, this.selectCardGroup)
+      setLocalItem('store', this.camp, this[this.curCardGroup])
+    },
+    async getStoreData() {
+      this.selectCardGroup = await getLocalItem('group', this.camp) || []
+      this.northCardGroup = await getLocalItem('store', camp.north) || []
+    },
     joinGroup(data) {
       this.selectCardGroup.push(data)
       const index = this[this.curCardGroup].indexOf(data)
       this[this.curCardGroup].splice(index, 1)
+      this.setStoreData()
     },
     takeOutGroup(data) {
       this[this.curCardGroup].push(data)
       const index = this.selectCardGroup.indexOf(data)
       this.selectCardGroup.splice(index, 1)
+      this.setStoreData()
     },
     onChange(data) {
-      console.log(data)
       this.king = this.kingGroup[this.camp][data]
     }
   },
   watch: {
     selectCardGroup(val) {
+      console.log(val)
       const specialCount = calculateSpecialNumber(val)
       this.rule.specialNumber = specialCount
       this.rule.unitNumber = val.length - specialCount
+    },
+    camp() {
+      this.getStoreData()
     }
+  },
+  async created() {
+    this.getStoreData()
   }
 }
 </script>

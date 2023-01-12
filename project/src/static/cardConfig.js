@@ -42,7 +42,10 @@ export const typeList = {
   hornMan:      {type: 'HornMan', desc: '除自己外，同排非英雄战力翻倍'},
   burnMan:      {type: 'BurnMan', desc: '敌方同排战斗力大于10时，损毁敌方该排最强战力'},
   compatriots:  {type: 'Compatriots', desc: '相同卡战斗力翻倍'},
-  siegeHornMan: {type: 'SiegeHornMan', desc: '攻城号角'}
+  siegeHornMan: {type: 'SiegeHornMan', desc: '攻城号角'},
+  coldBlooded:  {type: 'ColdBlooded', desc: '从对方废牌堆中抽一张单位牌放手里'},
+  whiteFlame:   {type: 'WhiteFlame', desc: '取消对手领导牌的能力'},
+  perspective:  {type: 'Perspective', desc: '随机检索对手三张卡牌'}
 }
 
 export const neutralCardGroup = [
@@ -389,6 +392,162 @@ export const NorthCardGroup = [
   },
 ]
 
+export const NilfgaardianCardGroup = [
+  {
+    combat: 10,
+    position: 'siege',
+    hero: true,
+    type: null,
+    name: '符里斯',
+    fieldSelect: false,
+  },
+  {
+    combat: 10,
+    position: 'shooter',
+    hero: true,
+    type: null,
+    name: '艾格布拉杰',
+    fieldSelect: false,
+  },
+  {
+    combat: 10,
+    position: 'warrior',
+    hero: true,
+    type: null,
+    name: '古雷特的雷索',
+    fieldSelect: false,
+  },
+  {
+    combat: 10,
+    position: 'warrior',
+    hero: true,
+    type: typeList.doctor.type,
+    name: '寇赫伦',
+    fieldSelect: false,
+    desc: typeList.doctor.desc,
+  },
+  {
+    combat: 9,
+    position: 'warrior',
+    type: typeList.spy.type,
+    name: '史凯伦',
+    fieldSelect: true,
+    desc: typeList.spy.desc
+  },
+  {
+    combat: 7,
+    position: 'warrior',
+    type: typeList.spy.type,
+    name: '希拉德',
+    fieldSelect: true,
+    desc: typeList.spy.desc
+  },
+  {
+    combat: 4,
+    position: 'warrior',
+    type: typeList.spy.type,
+    name: '瓦提尔',
+    fieldSelect: true,
+    desc: typeList.spy.desc
+  },
+  {
+    combat: 1,
+    position: 'shooter',
+    type: typeList.doctor.type,
+    name: '远程医生',
+    fieldSelect: true,
+    desc: typeList.doctor.desc,
+  },
+  {
+    combat: 1,
+    position: 'shooter',
+    type: typeList.doctor.type,
+    name: '远程医生',
+    fieldSelect: true,
+    desc: typeList.doctor.desc,
+  },
+  {
+    combat: 0,
+    position: 'siege',
+    type: typeList.doctor.type,
+    name: '攻城医生',
+    fieldSelect: true,
+    desc: typeList.doctor.desc,
+  },
+  {
+    combat: 5,
+    position: 'warrior',
+    type: typeList.compatriots.type,
+    name: '年轻的特使',
+    fieldSelect: true,
+    desc: typeList.compatriots.desc,
+  },
+  {
+    combat: 5,
+    position: 'warrior',
+    type: typeList.compatriots.type,
+    name: '年轻的特使',
+    fieldSelect: true,
+    desc: typeList.compatriots.desc,
+  },
+  {
+    combat: 3,
+    position: 'warrior',
+    type: typeList.compatriots.type,
+    name: '帝国班',
+    fieldSelect: true,
+    desc: typeList.compatriots.desc,
+  },
+  {
+    combat: 3,
+    position: 'warrior',
+    type: typeList.compatriots.type,
+    name: '帝国班',
+    fieldSelect: true,
+    desc: typeList.compatriots.desc,
+  },
+  {
+    combat: 3,
+    position: 'warrior',
+    type: typeList.compatriots.type,
+    name: '帝国班',
+    fieldSelect: true,
+    desc: typeList.compatriots.desc,
+  },
+  {
+    combat: 3,
+    position: 'warrior',
+    type: typeList.compatriots.type,
+    name: '帝国班',
+    fieldSelect: true,
+    desc: typeList.compatriots.desc,
+  },
+  {
+    combat: 2,
+    position: 'warrior',
+    type: typeList.compatriots.type,
+    name: '那乌西卡骑兵班',
+    fieldSelect: true,
+    desc: typeList.compatriots.desc,
+  },
+  {
+    combat: 2,
+    position: 'warrior',
+    type: typeList.compatriots.type,
+    name: '那乌西卡骑兵班',
+    fieldSelect: true,
+    desc: typeList.compatriots.desc,
+  },
+  {
+    combat: 2,
+    position: 'warrior',
+    type: typeList.compatriots.type,
+    name: '那乌西卡骑兵班',
+    fieldSelect: true,
+    desc: typeList.compatriots.desc,
+  },
+]
+
 export const positionType = {
   weather:  "天气牌",
   warrior:  "战士",
@@ -429,5 +588,28 @@ export const kingGroup = {
       fieldSelect: true,
       desc: typeList.siegeHornMan.desc
     }
+  ],
+  Nilfgaardian: [
+    {
+      id: 'nilfgaardian1',
+      type: typeList.coldBlooded.type,
+      name: '恩希尔*冷血无情',
+      fieldSelect: true,
+      desc: typeList.coldBlooded.desc
+    },
+    {
+      id: 'nilfgaardian2',
+      type: typeList.whiteFlame.type,
+      name: '恩希尔*白色火焰',
+      fieldSelect: true,
+      desc: typeList.whiteFlame.desc
+    },
+    {
+      id: 'nilfgaardian3',
+      type: typeList.perspective.type,
+      name: '恩希尔*尼弗伽德大帝',
+      fieldSelect: true,
+      desc: typeList.perspective.desc
+    },
   ]
 }

@@ -6,6 +6,7 @@ import { Button, Input, Form, FormItem, RadioGroup, RadioButton, Dialog, Popover
 import GoEasy from 'goeasy';
 import 'element-ui/lib/theme-chalk/index.css';
 import './index.css'
+import './indexDB'
 
 // 建议在main.js里初始化全局的GoEasy对象
 Vue.prototype.goEasy = GoEasy.getInstance({
