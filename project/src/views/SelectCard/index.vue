@@ -27,17 +27,18 @@
       <div class=" mt-10">单位牌数量： <span :class="rule.unitNumber < 22 && 'text-red-600'">{{ rule.unitNumber }}</span>/22</div>
       <div>特殊牌数量： <span :class="rule.specialNumber > 10 && 'text-red-600'">{{ rule.specialNumber }}</span>/10</div>
       <div class="absolute bottom-20 w-full">
-        <el-button type="success" :disabled="ableBegin">开始游戏</el-button>
+        <el-button type="success" :disabled="ableBegin" @click="BeginGame">开始游戏</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { campList, camp, neutralCardGroup, NorthCardGroup, kingGroup } from '@/static/cardConfig'
+import { campList, camp, neutralCardGroup, NorthCardGroup, NilfgaardianCardGroup, kingGroup } from '@/static/cardConfig'
 import { judgeCardGroup, calculateSpecialNumber } from './utils' 
 import Card from '@/components/Card.vue'
 import { setLocalItem, getLocalItem } from '@/indexDB'
+import { mapMutations } from 'vuex'
 export default {
   name: 'SelectCard',
   components: {
@@ -47,8 +48,8 @@ export default {
     return {
       campList: campList,
       camp: camp.north,
-      northCardGroup: neutralCardGroup.concat(NorthCardGroup),
-      nilfgaardianCardGroup: neutralCardGroup,
+      northCardGroup: [],
+      nilfgaardianCardGroup: [],
       kingGroup: kingGroup,
       selectCardGroup: [],
       king: kingGroup[camp.north][0],
@@ -81,16 +82,18 @@ export default {
         return false
       }
       return true
-    }
+    },
   },
   methods: {
+    ...mapMutations('battle', ['setCamp', 'setKingCard']),
     setStoreData() {
       setLocalItem('group', this.camp, this.selectCardGroup)
       setLocalItem('store', this.camp, this[this.curCardGroup])
     },
     async getStoreData() {
       this.selectCardGroup = await getLocalItem('group', this.camp) || []
-      this.northCardGroup = await getLocalItem('store', camp.north) || []
+      this.northCardGroup = await getLocalItem('store', camp.north) || neutralCardGroup.concat(NorthCardGroup)
+      this.nilfgaardianCardGroup = await getLocalItem('store', camp.nilfgaardian) || neutralCardGroup.concat(NilfgaardianCardGroup)
     },
     joinGroup(data) {
       this.selectCardGroup.push(data)
@@ -106,6 +109,10 @@ export default {
     },
     onChange(data) {
       this.king = this.kingGroup[this.camp][data]
+    },
+    BeginGame() {
+      this.setKingCard(this.king)
+      this.$router.replace({path:'/battle'})
     }
   },
   watch: {
@@ -115,12 +122,14 @@ export default {
       this.rule.specialNumber = specialCount
       this.rule.unitNumber = val.length - specialCount
     },
-    camp() {
+    camp(val) {
       this.getStoreData()
+      this.setCamp(val)
     }
   },
   async created() {
     this.getStoreData()
+    this.setCamp(this.camp)
   }
 }
 </script>

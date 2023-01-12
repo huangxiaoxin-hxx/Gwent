@@ -1,17 +1,18 @@
 <template>
-  <div class="battle">
-    battle
+  <div class="battle h-screen w-full">
+    <div class="h-1/2"></div>
+    <div class="h-1/2">
+      <OwnWar />
+    </div>
   </div>
 </template>
 
 <script>
+import OwnWar from './components/OwnWar.vue'
 export default {
-  name: "Battle"
+  name: "Battle",
+  components: {
+    OwnWar
+  },
 }
 </script>
-
-<style scoped>
-.battle {
-  width: 100%;
-}
-</style>
