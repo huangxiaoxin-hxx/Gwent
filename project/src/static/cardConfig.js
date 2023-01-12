@@ -552,7 +552,8 @@ export const positionType = {
   weather:  "天气牌",
   warrior:  "战士",
   shooter:  "射手",
-  siege:    "攻城"
+  siege:    "攻城",
+  king:     "国王"
 }
 
 export const abilityType = {
@@ -567,6 +568,7 @@ export const kingGroup = {
   North: [
     {
       id: 'north1',
+      position: 'king',
       type: typeList.sunny.type,
       name: '北方的指挥领主',
       fieldSelect: true,
@@ -592,6 +594,7 @@ export const kingGroup = {
   Nilfgaardian: [
     {
       id: 'nilfgaardian1',
+      position: 'king',
       type: typeList.coldBlooded.type,
       name: '恩希尔*冷血无情',
       fieldSelect: true,
@@ -599,6 +602,7 @@ export const kingGroup = {
     },
     {
       id: 'nilfgaardian2',
+      position: 'king',
       type: typeList.whiteFlame.type,
       name: '恩希尔*白色火焰',
       fieldSelect: true,
@@ -606,6 +610,7 @@ export const kingGroup = {
     },
     {
       id: 'nilfgaardian3',
+      position: 'king',
       type: typeList.perspective.type,
       name: '恩希尔*尼弗伽德大帝',
       fieldSelect: true,

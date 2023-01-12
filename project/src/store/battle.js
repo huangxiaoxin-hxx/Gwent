@@ -7,7 +7,8 @@ const battle = {
     handCardList: null,
     kingCard: null,
     camp: null,
-    cardGroup: null
+    cardGroup: null,
+    warriorList: null,
   },
   actions: {
     async beginGameRandomCard(context) {
@@ -15,6 +16,10 @@ const battle = {
       const { cardList, handCardList } = getHandCardGroup(selectCardGroup)
       context.commit('setHandCardList', handCardList)
       context.commit('setCardGroup', cardList)
+    },
+    async joinWarriorArea(context, Card) {
+      const warriorList = [...context.getters.warriorList, Card]
+      context.commit('setWarriorList', warriorList)
     }
   },
   mutations: {
@@ -29,6 +34,9 @@ const battle = {
     },
     setCamp(state, camp) {
       state.camp = camp
+    },
+    setWarriorList(state, list) {
+      state.warriorList = list
     }
   },
   getters: {
@@ -36,6 +44,7 @@ const battle = {
     kingCard: state => state.kingCard || {},
     camp: state => state.camp || 'North',
     cardGroup: state => state.cardGroup || [],
+    warriorList: state => state.warriorList || []
   }
 }
 

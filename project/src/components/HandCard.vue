@@ -14,7 +14,7 @@
           :content="cardData.desc">
             <el-button slot="reference" type="text" size="mini">查看详情</el-button>
           </el-popover>
-          <el-button v-if="statue === 'other'" type="text" size="mini" @click="playingCard">出牌</el-button>
+          <el-button type="text" size="mini" @click="playingCard">出牌</el-button>
         </div>
       </div>
     </div>
@@ -23,6 +23,7 @@
 
 <script>
 import { positionType, abilityType } from '@/static/cardConfig'
+import { playingCardTypeSwitch } from '@/cardRule'
 export default {
   name: "Card",
   props: {
@@ -30,10 +31,6 @@ export default {
       type: Object,
       default: () => {}
     },
-    statue: {
-      type: String,
-      default: 'other'
-    }
   },
   computed: {
     borderColor() {
@@ -48,7 +45,8 @@ export default {
   },
   methods: {
     playingCard() {
-      this.$emit('playingCard', this.cardData)
+      // this.$emit('playingCard', this.cardData)
+      playingCardTypeSwitch(this.cardData)
     },
   }
 }
