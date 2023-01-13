@@ -4,6 +4,7 @@
     <div class="h-1/2">
       <OwnWar />
     </div>
+    <div class="weather"></div>
   </div>
 </template>
 

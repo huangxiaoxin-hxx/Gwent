@@ -49,7 +49,6 @@ export default {
   },
   methods: {
     playingCard() {
-      // this.$emit('playingCard', this.cardData)
       playingCardTypeSwitch(this.cardData)
     },
   }

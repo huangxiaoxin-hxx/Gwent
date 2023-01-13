@@ -2,7 +2,7 @@
 
 export const getHandCardGroup = (list) => {
   const cardList = shuffle(list)
-  const handCardList = cardList.splice(0,10)
+  const handCardList = cardList.splice(0,30)
   return {
     cardList,
     handCardList

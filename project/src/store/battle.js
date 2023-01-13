@@ -9,7 +9,13 @@ const battle = {
     camp: null,
     cardGroup: null,
     warriorList: null,
-    warriorCombat: 0
+    initialWarriorList: null,
+    warriorCombat: 0,
+    weather: {
+      frost: false,
+      fog: false,
+      rain: false
+    }
   },
   actions: {
     async beginGameRandomCard(context) {
@@ -19,9 +25,12 @@ const battle = {
       context.commit('setCardGroup', cardList)
     },
     async joinWarriorArea(context, Card) {
-      const warriorList = [...context.getters.warriorList, Card]
+      console.log(Card)
+      const warriorList = [...context.getters.warriorList, {...Card}]
+      const initialWarriorList = [...context.getters.initialWarriorList, {...Card}]
       const index = context.getters.handCardList.indexOf(Card)
       context.commit('setWarriorList', warriorList)
+      context.commit('setInitialWarriorList', initialWarriorList) // 需要一个初始的数组保存最开始的战斗力
       context.commit('delHandCard', index)
     }
   },
@@ -41,12 +50,22 @@ const battle = {
     setWarriorList(state, list) {
       state.warriorList = list
     },
+    setInitialWarriorList(state, list) {
+      state.initialWarriorList = list
+    },
     delHandCard(state, index) {
       state.handCardList.splice(index, 1)
     },
     setWarriorCombat(state, combat) {
       state.warriorCombat = combat
     },
+    setWeather(state, { frost, fog, rain }) {
+      state.weather = { 
+        frost:  frost || state.frost, 
+        fog:    fog || state.fog,
+        rain:   rain || state.rain
+      }
+    }
   },
   getters: {
     handCardList: state => state.handCardList || [],
@@ -54,7 +73,9 @@ const battle = {
     camp: state => state.camp || 'North',
     cardGroup: state => state.cardGroup || [],
     warriorList: state => state.warriorList || [],
-    warriorCombat: state => state.warriorCombat
+    initialWarriorList: state => state.initialWarriorList || [],
+    warriorCombat: state => state.warriorCombat,
+    weather: state => state.weather
   }
 }
 
