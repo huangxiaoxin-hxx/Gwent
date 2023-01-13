@@ -1,6 +1,7 @@
 <template>
   <div class="w-full h-full flex">
     <div class="left w-52 flex items-center">
+      <div></div>
       <KingCard />
     </div>
     <div class="center flex-grow flex flex-col overflow-hidden">

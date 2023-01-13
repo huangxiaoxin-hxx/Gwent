@@ -14,7 +14,7 @@
           :content="cardData.desc">
             <el-button slot="reference" type="text" size="mini">查看详情</el-button>
           </el-popover>
-          <el-button type="text" size="mini" @click="playingCard">出牌</el-button>
+          <el-button v-if="statue === 'handArea'" type="text" size="mini" @click="playingCard">出牌</el-button>
         </div>
       </div>
     </div>
@@ -31,6 +31,10 @@ export default {
       type: Object,
       default: () => {}
     },
+    statue: {
+      type: String,
+      default: 'handArea'
+    }
   },
   computed: {
     borderColor() {

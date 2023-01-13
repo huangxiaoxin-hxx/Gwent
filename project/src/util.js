@@ -2,7 +2,7 @@
 
 export const getHandCardGroup = (list) => {
   const cardList = shuffle(list)
-  const handCardList = cardList.splice(1,10)
+  const handCardList = cardList.splice(0,10)
   return {
     cardList,
     handCardList
@@ -15,6 +15,7 @@ export const randomGetCard = (list) => {
   return list.splice(random, 1)
 }
 
+// 洗牌逻辑
 function shuffle(arr){
   var result = [],
       random;

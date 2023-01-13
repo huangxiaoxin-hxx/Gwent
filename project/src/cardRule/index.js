@@ -34,10 +34,21 @@ export const playingCardPositionSwitch = (Card) => {
   switch (Card.position) {
     case 'warrior':
       store.dispatch('battle/joinWarriorArea', Card)
-      console.log(Card)
+      calculateWarriorCombat()
       break;
   
     default:
       break;
   }
+}
+
+function calculateWarriorCombat() {
+  const warriorList = store.getters['battle/warriorList']
+  console.log(warriorList)
+  let sumCombat = 0
+  warriorList.map(item => {
+    sumCombat += item.combat
+  })
+  store.commit('battle/setWarriorCombat', sumCombat)
+  console.log(store.getters['battle/warriorCombat'])
 }

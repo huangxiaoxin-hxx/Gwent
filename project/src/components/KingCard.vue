@@ -23,6 +23,9 @@ export default {
   name: "KingCard",
   computed: {
     ...mapGetters('battle', ['kingCard'])
+  },
+  methods: {
+    playingCard() {}
   }
 }
 </script>
