@@ -48,6 +48,10 @@ export const playingCardPositionSwitch = (Card) => {
       store.dispatch('battle/joinWarriorArea', Card)
       calculateWarriorCombat()
       break;
+    case 'shooter':
+      store.dispatch('battle/joinShooterArea', Card)
+      calculateShooterCombat()
+      break;
     default:
       break;
   }
@@ -76,10 +80,14 @@ function playingRain() {
 function playingSunny() {
   store.commit('battle/setWeather', {frost: false, fog: false, rain: false})
   const initialWarriorList = store.getters['battle/initialWarriorList']
-  const deepData = JSON.parse(JSON.stringify(initialWarriorList))
-  store.commit('battle/setWarriorList', deepData)
+  const initialShooterList = store.getters['battle/initialShooterList']
+  const deepWarriorData = JSON.parse(JSON.stringify(initialWarriorList))
+  const deepShooterData = JSON.parse(JSON.stringify(initialShooterList))
+  store.commit('battle/setWarriorList', deepWarriorData)
+  store.commit('battle/setShooterList', deepShooterData)
   // 打出晴天，重新计算战斗力
   calculateWarriorCombat()
+  calculateShooterCombat()
 }
 
 function calculateWarriorCombat() {
@@ -100,6 +108,30 @@ function calculateWarriorCombat() {
   })
   store.commit('battle/setWarriorCombat', sumCombat)
 }
+
+//计算远程战斗力
+function calculateShooterCombat() {
+  const shooterList = store.getters['battle/shooterList']
+  const fog = store.getters['battle/weather'].fog
+  if(fog) {
+    // 将除hero和0战斗力牌除外的牌战斗力置为1
+    shooterList.map(item => {
+      if(item.fieldSelect && item.combat > 0) {
+        item.combat = 1
+      }
+    })
+    store.commit('battle/setShooterList', shooterList)
+  } 
+  let sumCombat = 0
+  shooterList.map(item => {
+    sumCombat += item.combat
+  })
+  store.commit('battle/setShooterCombat', sumCombat)
+}
+
+
+
+
 
 // 打出一张牌就删掉一张手牌
 function delHandCard(Card) {

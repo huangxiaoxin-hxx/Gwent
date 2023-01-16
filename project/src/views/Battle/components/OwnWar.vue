@@ -8,7 +8,9 @@
       <div class="flex-1">
         <WarriorArea />
       </div>
-      <div class="flex-1"></div>
+      <div class="flex-1">
+        <ShooterArea />
+      </div>
       <div class="flex-1"></div>
       <div class="flex-1">
         <HandArea />
@@ -23,12 +25,14 @@ import { mapGetters, mapActions } from 'vuex'
 import HandArea from '@/components/HandArea.vue'
 import KingCard from '@/components/KingCard.vue'
 import WarriorArea from '@/components/WarriorArea.vue'
+import ShooterArea from '@/components/ShooterArea.vue'
 export default {
   name: "OwnWar",
   components: {
     HandArea,
     KingCard,
-    WarriorArea
+    WarriorArea,
+    ShooterArea
   },
   methods: {
     ...mapActions('battle', ['beginGameRandomCard'])
