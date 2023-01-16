@@ -17,6 +17,14 @@ export const playingCardTypeSwitch = (Card) => {
       // 打出霜冻牌
       playingFrost()
       break;
+    case typeList.fog.type:
+      // 打出浓雾牌
+      playingFog()
+      break;
+    case typeList.rain.type:
+      // 打出酸雨牌
+      playingRain()
+      break;
     case typeList.sunny.type:
       playingSunny()
       break;
@@ -40,8 +48,6 @@ export const playingCardPositionSwitch = (Card) => {
       store.dispatch('battle/joinWarriorArea', Card)
       calculateWarriorCombat()
       break;
-    case 'weather':
-      break;
     default:
       break;
   }
@@ -53,6 +59,19 @@ function playingFrost() {
   // 打出霜冻，重写计算近战战斗力
   calculateWarriorCombat()
 }
+
+function playingFog() {
+  store.commit('battle/setWeather', {fog: true})
+  // 打出浓雾，重写计算远程战斗力
+  calculateWarriorCombat()
+}
+
+function playingRain() {
+  store.commit('battle/setWeather', {rain: true})
+  // 打出霜冻，重写计算攻城战斗力
+  calculateWarriorCombat()
+}
+
 
 function playingSunny() {
   store.commit('battle/setWeather', {frost: false, fog: false, rain: false})

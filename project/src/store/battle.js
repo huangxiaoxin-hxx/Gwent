@@ -59,11 +59,10 @@ const battle = {
     setWarriorCombat(state, combat) {
       state.warriorCombat = combat
     },
-    setWeather(state, { frost, fog, rain }) {
-      state.weather = { 
-        frost:  frost || state.frost, 
-        fog:    fog || state.fog,
-        rain:   rain || state.rain
+    setWeather(state, obj) {
+      state.weather = {
+        ...state.weather,
+        ...obj
       }
     }
   },

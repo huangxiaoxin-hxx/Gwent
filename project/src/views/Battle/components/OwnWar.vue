@@ -1,10 +1,10 @@
 <template>
   <div class="w-full h-full flex">
-    <div class="left w-52 flex items-center">
+    <div class="left w-60 flex items-center">
       <div></div>
       <KingCard />
     </div>
-    <div class="center flex-grow flex flex-col overflow-hidden">
+    <div class="center flex-1 flex flex-col overflow-hidden">
       <div class="flex-1">
         <WarriorArea />
       </div>
