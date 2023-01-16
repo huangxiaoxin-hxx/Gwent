@@ -1,6 +1,6 @@
 <template>
   <div class="hand-area flex h-full overflow-scroll">
-    <HandCard v-for="(item, index) in handCardList" :cardData="item" :key="index"/>
+    <HandCard v-for="(item) in handCardList" :cardData="item" :key="item.id"/>
   </div>
 </template>
 

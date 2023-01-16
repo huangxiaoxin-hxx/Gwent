@@ -12,8 +12,11 @@ const battle = {
     initialWarriorList: null,
     shooterList: null,
     initialShooterList: null,
+    siegeList: null,
+    initialSiegeList: null,
     warriorCombat: 0,
     shooterCombat: 0,
+    siegeCombat: 0,
     weather: {
       frost: false,
       fog: false,
@@ -30,18 +33,20 @@ const battle = {
     async joinWarriorArea(context, Card) {
       const warriorList = [...context.getters.warriorList, {...Card}]
       const initialWarriorList = [...context.getters.initialWarriorList, {...Card}]
-      const index = context.getters.handCardList.indexOf(Card)
       context.commit('setWarriorList', warriorList)
       context.commit('setInitialWarriorList', initialWarriorList) // 需要一个初始的数组保存最开始的战斗力
-      context.commit('delHandCard', index)
     },
     async joinShooterArea(context, Card) {
       const shooterList = [...context.getters.shooterList, {...Card}]
       const initialShooterList = [...context.getters.initialShooterList, {...Card}]
-      const index = context.getters.handCardList.indexOf(Card)
       context.commit('setShooterList', shooterList)
       context.commit('setInitialShooterList', initialShooterList) // 需要一个初始的数组保存最开始的战斗力
-      context.commit('delHandCard', index)
+    },
+    async joinSiegeArea(context, Card) {
+      const siegeList = [...context.getters.siegeList, {...Card}]
+      const initialSiegeList = [...context.getters.initialSiegeList, {...Card}]
+      context.commit('setSiegeList', siegeList)
+      context.commit('setInitialSiegeList', initialSiegeList) // 需要一个初始的数组保存最开始的战斗力
     }
   },
   mutations: {
@@ -69,6 +74,12 @@ const battle = {
     setInitialShooterList(state, list) {
       state.initialShooterList = list
     },
+    setSiegeList(state, list) {
+      state.siegeList = list
+    },
+    setInitialSiegeList(state, list) {
+      state.initialSiegeList = list
+    },
     delHandCard(state, index) {
       state.handCardList.splice(index, 1)
     },
@@ -77,6 +88,9 @@ const battle = {
     },
     setShooterCombat(state, combat) {
       state.shooterCombat = combat
+    },
+    setSiegeCombat(state, combat) {
+      state.siegeCombat = combat
     },
     setWeather(state, obj) {
       state.weather = {
@@ -94,8 +108,11 @@ const battle = {
     initialWarriorList: state => state.initialWarriorList || [],
     shooterList: state => state.shooterList || [],
     initialShooterList: state => state.initialShooterList || [],
+    siegeList: state => state.siegeList || [],
+    initialSiegeList: state => state.initialSiegeList || [],
     warriorCombat: state => state.warriorCombat,
     shooterCombat: state => state.shooterCombat,
+    siegeCombat: state => state.siegeCombat,
     weather: state => state.weather
   }
 }

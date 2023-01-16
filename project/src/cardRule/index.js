@@ -41,7 +41,7 @@ export const playingCardTypeSwitch = (Card) => {
 //   king:     "国王"
 // }
 
-
+// 判断卡牌的位置
 export const playingCardPositionSwitch = (Card) => {
   switch (Card.position) {
     case 'warrior':
@@ -52,9 +52,14 @@ export const playingCardPositionSwitch = (Card) => {
       store.dispatch('battle/joinShooterArea', Card)
       calculateShooterCombat()
       break;
+    case 'siege':
+      store.dispatch('battle/joinSiegeArea', Card)
+      calculateSiegeCombat()
+      break;
     default:
       break;
   }
+  // 打出一张手牌，将该牌从手中移除
   delHandCard(Card)
 }
 
@@ -67,27 +72,31 @@ function playingFrost() {
 function playingFog() {
   store.commit('battle/setWeather', {fog: true})
   // 打出浓雾，重写计算远程战斗力
-  calculateWarriorCombat()
+  calculateShooterCombat()
 }
 
 function playingRain() {
   store.commit('battle/setWeather', {rain: true})
-  // 打出霜冻，重写计算攻城战斗力
-  calculateWarriorCombat()
+  // 打出酸雨，重写计算攻城战斗力
+  calculateSiegeCombat()
 }
 
-
+// 打出晴天牌
 function playingSunny() {
   store.commit('battle/setWeather', {frost: false, fog: false, rain: false})
   const initialWarriorList = store.getters['battle/initialWarriorList']
   const initialShooterList = store.getters['battle/initialShooterList']
+  const initialSiegeList = store.getters['battle/initialSiegeList']
   const deepWarriorData = JSON.parse(JSON.stringify(initialWarriorList))
   const deepShooterData = JSON.parse(JSON.stringify(initialShooterList))
+  const deepSiegeData = JSON.parse(JSON.stringify(initialSiegeList))
   store.commit('battle/setWarriorList', deepWarriorData)
   store.commit('battle/setShooterList', deepShooterData)
+  store.commit('battle/setSiegeList', deepSiegeData)
   // 打出晴天，重新计算战斗力
   calculateWarriorCombat()
   calculateShooterCombat()
+  calculateSiegeCombat()
 }
 
 function calculateWarriorCombat() {
@@ -129,9 +138,25 @@ function calculateShooterCombat() {
   store.commit('battle/setShooterCombat', sumCombat)
 }
 
-
-
-
+// 计算攻城战斗力
+function calculateSiegeCombat() {
+  const siegeList = store.getters['battle/siegeList']
+  const rain = store.getters['battle/weather'].rain
+  if(rain) {
+    // 将除hero和0战斗力牌除外的牌战斗力置为1
+    siegeList.map(item => {
+      if(item.fieldSelect && item.combat > 0) {
+        item.combat = 1
+      }
+    })
+    store.commit('battle/setSiegeList', siegeList)
+  } 
+  let sumCombat = 0
+  siegeList.map(item => {
+    sumCombat += item.combat
+  })
+  store.commit('battle/setSiegeCombat', sumCombat)
+}
 
 // 打出一张牌就删掉一张手牌
 function delHandCard(Card) {

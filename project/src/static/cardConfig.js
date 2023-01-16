@@ -50,6 +50,7 @@ export const typeList = {
 
 export const neutralCardGroup = [
   {
+    id: 1,
     combat: null,
     position: 'myself',
     type: typeList.exchange.type,
@@ -58,6 +59,7 @@ export const neutralCardGroup = [
     desc: "可替换己方场上一张普通任务牌"
   },
   {
+    id: 2,
     combat: null,
     position: 'myself',
     type: typeList.exchange.type,
@@ -66,6 +68,7 @@ export const neutralCardGroup = [
     desc: "可替换己方场上一张普通任务牌"
   },
   {
+    id: 3,
     combat: null,
     position: 'myself',
     type: typeList.exchange.type,
@@ -74,6 +77,7 @@ export const neutralCardGroup = [
     desc: "可替换己方场上一张普通任务牌"
   },
   {
+    id: 4,
     combat: null,
     position: 'myself',
     type: typeList.horn.type,
@@ -82,6 +86,7 @@ export const neutralCardGroup = [
     desc: typeList.horn.desc
   },
   {
+    id: 5,
     combat: null,
     position: 'myself',
     type: typeList.horn.type,
@@ -90,6 +95,7 @@ export const neutralCardGroup = [
     desc: typeList.horn.desc
   },
   {
+    id: 6,
     combat: null,
     position: 'myself',
     type: typeList.horn.type,
@@ -98,6 +104,7 @@ export const neutralCardGroup = [
     desc: typeList.horn.desc
   },
   {
+    id: 7,
     combat: null,
     position: 'all',
     type: typeList.burn.type,
@@ -106,6 +113,7 @@ export const neutralCardGroup = [
     desc: typeList.burn.desc
   },
   {
+    id: 8,
     combat: null,
     position: 'all',
     type: typeList.burn.type,
@@ -114,6 +122,7 @@ export const neutralCardGroup = [
     desc: typeList.burn.desc
   },
   {
+    id: 9,
     combat: null,
     position: 'all',
     type: typeList.burn.type,
@@ -122,6 +131,7 @@ export const neutralCardGroup = [
     desc: typeList.burn.desc
   },
   {
+    id: 10,
     combat: null,
     position: 'weather',
     type: typeList.frost.type,
@@ -130,6 +140,7 @@ export const neutralCardGroup = [
     desc: typeList.frost.desc
   },
   {
+    id: 11,
     combat: null,
     position: 'weather',
     type: typeList.frost.type,
@@ -138,6 +149,7 @@ export const neutralCardGroup = [
     desc: typeList.frost.desc
   },
   {
+    id: 12,
     combat: null,
     position: 'weather',
     type: typeList.frost.type,
@@ -146,6 +158,7 @@ export const neutralCardGroup = [
     desc: typeList.frost.desc
   },
   {
+    id: 13,
     combat: null,
     position: 'weather',
     type: typeList.fog.type,
@@ -154,6 +167,7 @@ export const neutralCardGroup = [
     desc: typeList.fog.desc
   },
   {
+    id: 14,
     combat: null,
     position: 'weather',
     type: typeList.fog.type,
@@ -162,6 +176,7 @@ export const neutralCardGroup = [
     desc: typeList.fog.desc
   },
   {
+    id: 15,
     combat: null,
     position: 'weather',
     type: typeList.fog.type,
@@ -170,6 +185,7 @@ export const neutralCardGroup = [
     desc: typeList.fog.desc
   },
   {
+    id: 16,
     combat: null,
     position: 'weather',
     type: typeList.rain.type,
@@ -178,6 +194,7 @@ export const neutralCardGroup = [
     desc: typeList.rain.desc,
   },
   {
+    id: 17,
     combat: null,
     position: 'weather',
     type: typeList.rain.type,
@@ -186,6 +203,7 @@ export const neutralCardGroup = [
     desc: typeList.rain.desc,
   },
   {
+    id: 18,
     combat: null,
     position: 'weather',
     type: typeList.sunny.type,
@@ -194,6 +212,7 @@ export const neutralCardGroup = [
     desc: typeList.sunny.desc
   },
   {
+    id: 19,
     combat: null,
     position: 'weather',
     type: typeList.sunny.type,
@@ -202,6 +221,7 @@ export const neutralCardGroup = [
     desc: typeList.sunny.desc
   },
   {
+    id: 20,
     combat: 15,
     position: 'warrior',
     hero: true,
@@ -210,6 +230,7 @@ export const neutralCardGroup = [
     fieldSelect: false,
   },
   {
+    id: 21,
     combat: 15,
     position: 'warrior',
     hero: true,
@@ -218,6 +239,7 @@ export const neutralCardGroup = [
     fieldSelect: false,
   },
   {
+    id: 22,
     combat: 7,
     position: 'warrior',
     hero: true,
@@ -226,6 +248,7 @@ export const neutralCardGroup = [
     fieldSelect: false,
   },
   {
+    id: 23,
     combat: 7,
     position: 'shooter',
     hero: true,
@@ -235,6 +258,7 @@ export const neutralCardGroup = [
     desc: typeList.doctor.desc
   },
   {
+    id: 24,
     combat: 0,
     position: 'warrior',
     hero: true,
@@ -244,6 +268,7 @@ export const neutralCardGroup = [
     desc: typeList.spy.desc
   },
   {
+    id: 25,
     combat: 2,
     position: 'warrior',
     type: typeList.hornMan.type,
@@ -252,6 +277,7 @@ export const neutralCardGroup = [
     desc: typeList.hornMan.desc
   },
   {
+    id: 26,
     combat: 7,
     position: 'warrior',
     type: typeList.burnMan.type,
@@ -263,6 +289,7 @@ export const neutralCardGroup = [
 
 export const NorthCardGroup = [
   {
+    id: 27,
     combat: 10,
     position: 'warrior',
     hero: true,
@@ -271,6 +298,7 @@ export const NorthCardGroup = [
     fieldSelect: false,
   },
   {
+    id: 28,
     combat: 10,
     position: 'shooter',
     hero: true,
@@ -279,6 +307,7 @@ export const NorthCardGroup = [
     fieldSelect: false,
   },
   {
+    id: 29,
     combat: 10,
     position: 'warrior',
     hero: true,
@@ -287,6 +316,7 @@ export const NorthCardGroup = [
     fieldSelect: false,
   },
   {
+    id: 30,
     combat: 10,
     position: 'warrior',
     hero: true,
@@ -295,6 +325,7 @@ export const NorthCardGroup = [
     fieldSelect: false,
   },
   {
+    id: 31,
     combat: 1,
     position: 'siege',
     type: typeList.spy.type,
@@ -303,6 +334,7 @@ export const NorthCardGroup = [
     desc: typeList.spy.desc
   },
   {
+    id: 32,
     combat: 4,
     position: 'warrior',
     type: typeList.spy.type,
@@ -311,6 +343,7 @@ export const NorthCardGroup = [
     desc: typeList.spy.desc
   },
   {
+    id: 33,
     combat: 5,
     position: 'warrior',
     type: typeList.spy.type,
@@ -319,6 +352,7 @@ export const NorthCardGroup = [
     desc: typeList.spy.desc
   },
   {
+    id: 34,
     combat: 5,
     position: 'shooter',
     type: typeList.compatriots.type,
@@ -327,6 +361,7 @@ export const NorthCardGroup = [
     desc: typeList.compatriots.desc
   },
   {
+    id: 35,
     combat: 5,
     position: 'shooter',
     type: typeList.compatriots.type,
@@ -335,6 +370,7 @@ export const NorthCardGroup = [
     desc: typeList.compatriots.desc
   },
   {
+    id: 36,
     combat: 5,
     position: 'shooter',
     type: typeList.compatriots.type,
@@ -343,6 +379,7 @@ export const NorthCardGroup = [
     desc: typeList.compatriots.desc
   },
   {
+    id: 37,
     combat: 8,
     position: 'siege',
     type: typeList.compatriots.type,
@@ -351,6 +388,7 @@ export const NorthCardGroup = [
     desc: typeList.compatriots.desc
   },
   {
+    id: 38,
     combat: 8,
     position: 'siege',
     type: typeList.compatriots.type,
@@ -359,6 +397,7 @@ export const NorthCardGroup = [
     desc: typeList.compatriots.desc
   },
   {
+    id: 39,
     combat: 4,
     position: 'warrior',
     type: typeList.compatriots.type,
@@ -367,6 +406,7 @@ export const NorthCardGroup = [
     desc: typeList.compatriots.desc
   },
   {
+    id: 40,
     combat: 4,
     position: 'warrior',
     type: typeList.compatriots.type,
@@ -375,6 +415,7 @@ export const NorthCardGroup = [
     desc: typeList.compatriots.desc
   },
   {
+    id: 41,
     combat: 4,
     position: 'warrior',
     type: typeList.compatriots.type,
@@ -383,6 +424,7 @@ export const NorthCardGroup = [
     desc: typeList.compatriots.desc
   },
   {
+    id: 42,
     combat: 5,
     position: 'siege',
     type: typeList.doctor.type,
@@ -394,6 +436,7 @@ export const NorthCardGroup = [
 
 export const NilfgaardianCardGroup = [
   {
+    id: 43,
     combat: 10,
     position: 'siege',
     hero: true,
@@ -402,6 +445,7 @@ export const NilfgaardianCardGroup = [
     fieldSelect: false,
   },
   {
+    id: 44,
     combat: 10,
     position: 'shooter',
     hero: true,
@@ -410,6 +454,7 @@ export const NilfgaardianCardGroup = [
     fieldSelect: false,
   },
   {
+    id: 45,
     combat: 10,
     position: 'warrior',
     hero: true,
@@ -418,6 +463,7 @@ export const NilfgaardianCardGroup = [
     fieldSelect: false,
   },
   {
+    id: 46,
     combat: 10,
     position: 'warrior',
     hero: true,
@@ -427,6 +473,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.doctor.desc,
   },
   {
+    id: 47,
     combat: 9,
     position: 'warrior',
     type: typeList.spy.type,
@@ -435,6 +482,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.spy.desc
   },
   {
+    id: 48,
     combat: 7,
     position: 'warrior',
     type: typeList.spy.type,
@@ -443,6 +491,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.spy.desc
   },
   {
+    id: 49,
     combat: 4,
     position: 'warrior',
     type: typeList.spy.type,
@@ -451,6 +500,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.spy.desc
   },
   {
+    id: 50,
     combat: 1,
     position: 'shooter',
     type: typeList.doctor.type,
@@ -459,6 +509,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.doctor.desc,
   },
   {
+    id: 51,
     combat: 1,
     position: 'shooter',
     type: typeList.doctor.type,
@@ -467,6 +518,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.doctor.desc,
   },
   {
+    id: 52,
     combat: 0,
     position: 'siege',
     type: typeList.doctor.type,
@@ -475,6 +527,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.doctor.desc,
   },
   {
+    id: 53,
     combat: 5,
     position: 'warrior',
     type: typeList.compatriots.type,
@@ -483,6 +536,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.compatriots.desc,
   },
   {
+    id: 54,
     combat: 5,
     position: 'warrior',
     type: typeList.compatriots.type,
@@ -491,6 +545,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.compatriots.desc,
   },
   {
+    id: 55,
     combat: 3,
     position: 'warrior',
     type: typeList.compatriots.type,
@@ -499,6 +554,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.compatriots.desc,
   },
   {
+    id: 56,
     combat: 3,
     position: 'warrior',
     type: typeList.compatriots.type,
@@ -507,6 +563,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.compatriots.desc,
   },
   {
+    id: 57,
     combat: 3,
     position: 'warrior',
     type: typeList.compatriots.type,
@@ -515,6 +572,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.compatriots.desc,
   },
   {
+    id: 58,
     combat: 3,
     position: 'warrior',
     type: typeList.compatriots.type,
@@ -523,6 +581,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.compatriots.desc,
   },
   {
+    id: 59,
     combat: 2,
     position: 'warrior',
     type: typeList.compatriots.type,
@@ -531,6 +590,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.compatriots.desc,
   },
   {
+    id: 60,
     combat: 2,
     position: 'warrior',
     type: typeList.compatriots.type,
@@ -539,6 +599,7 @@ export const NilfgaardianCardGroup = [
     desc: typeList.compatriots.desc,
   },
   {
+    id: 61,
     combat: 2,
     position: 'warrior',
     type: typeList.compatriots.type,

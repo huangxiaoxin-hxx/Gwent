@@ -5,13 +5,15 @@
       <KingCard />
     </div>
     <div class="center flex-1 flex flex-col overflow-hidden">
-      <div class="flex-1">
+      <div class="flex-1 mb-1">
         <WarriorArea />
       </div>
-      <div class="flex-1">
+      <div class="flex-1 mb-1">
         <ShooterArea />
       </div>
-      <div class="flex-1"></div>
+      <div class="flex-1 mb-1">
+        <SiegeArea />
+      </div>
       <div class="flex-1">
         <HandArea />
       </div>
@@ -26,13 +28,15 @@ import HandArea from '@/components/HandArea.vue'
 import KingCard from '@/components/KingCard.vue'
 import WarriorArea from '@/components/WarriorArea.vue'
 import ShooterArea from '@/components/ShooterArea.vue'
+import SiegeArea from '@/components/SiegeArea.vue'
 export default {
   name: "OwnWar",
   components: {
     HandArea,
     KingCard,
     WarriorArea,
-    ShooterArea
+    ShooterArea,
+    SiegeArea
   },
   methods: {
     ...mapActions('battle', ['beginGameRandomCard'])
