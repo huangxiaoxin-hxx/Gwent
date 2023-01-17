@@ -1,5 +1,6 @@
 import store from '@/store'
 import { typeList } from '@/static/cardConfig'
+import { cloneDeep } from 'lodash'
 // 出牌逻辑函数
 // export const abilityType = {
 //   Doctor:       '医生',
@@ -11,7 +12,10 @@ import { typeList } from '@/static/cardConfig'
 export const playingCardTypeSwitch = (Card) => {
   switch (Card.type) {
     case typeList.doctor.type:
-      
+
+      break;
+    case typeList.burn.type:
+      playingBurn()
       break;
     case typeList.frost.type:
       // 打出霜冻牌
@@ -59,30 +63,30 @@ export const playingCardPositionSwitch = (Card) => {
     default:
       break;
   }
-  // 打出一张手牌，将该牌从手中移除
+  // 打出一张手牌，将该牌从手中移
   delHandCard(Card)
 }
-
+// 打出霜冻
 function playingFrost() {
   store.commit('battle/setWeather', {frost: true})
-  // 打出霜冻，重写计算近战战斗力
+  // 重写计算近战战斗力
   calculateWarriorCombat()
 }
-
+// 打出浓雾
 function playingFog() {
   store.commit('battle/setWeather', {fog: true})
-  // 打出浓雾，重写计算远程战斗力
+  // 重写计算远程战斗力
   calculateShooterCombat()
 }
-
+// 打出酸雨
 function playingRain() {
   store.commit('battle/setWeather', {rain: true})
-  // 打出酸雨，重写计算攻城战斗力
+  // 重写计算攻城战斗力
   calculateSiegeCombat()
 }
-
 // 打出晴天牌
 function playingSunny() {
+  // todo:后续在vuex中优化
   store.commit('battle/setWeather', {frost: false, fog: false, rain: false})
   const initialWarriorList = store.getters['battle/initialWarriorList']
   const initialShooterList = store.getters['battle/initialShooterList']
@@ -99,6 +103,73 @@ function playingSunny() {
   calculateSiegeCombat()
 }
 
+// 打出灼烧牌,烧毁场上战力最高的可选牌
+function playingBurn() {
+  let max = 0
+  const warriorList = cloneDeep(store.getters['battle/warriorList'])
+  const shooterList = cloneDeep(store.getters['battle/shooterList'])
+  const siegeList = cloneDeep(store.getters['battle/siegeList'])
+  const list = [...warriorList, ...shooterList, ...siegeList]
+  // 找出最大combat
+  list.map(item => {
+    if(item.fieldSelect && item.combat != null) {
+      max = Math.max(max, item.combat)
+    }
+  })
+  // 将最大combat区分出来
+  const warriorGather = bifurcateBy(warriorList, (item) => item.combat === max && item.fieldSelect)
+  const shooterGather = bifurcateBy(shooterList, (item) => item.combat === max && item.fieldSelect)
+  const siegeGather = bifurcateBy(siegeList, (item) => item.combat === max && item.fieldSelect)
+  store.dispatch('battle/burnAllAreaSurvived', {
+    warriorSurvived: warriorGather[1], shooterSurvived: shooterGather[1], siegeSurvived: siegeGather[1]
+  })
+  const dieWarrior = warriorGather[0]
+  const dieShooter = shooterGather[0]
+  const dieSiege = siegeGather[0]
+  // 需要将原初copy战场组initial也删除对应卡牌，并放入墓地
+  delInitialArea(dieWarrior, dieShooter, dieSiege)
+}
+
+// 删除原初卡组区域
+function delInitialArea(dieWarrior, dieShooter, dieSiege) {
+  const initialWarriorList = cloneDeep(store.getters['battle/initialWarriorList'])
+  const initialShooterList = cloneDeep(store.getters['battle/initialShooterList'])
+  const initialSiegeList = cloneDeep(store.getters['battle/initialSiegeList'])
+  const cemeteryList = cloneDeep(store.getters['battle/cemeteryList'])
+  let dieList = []
+  console.log(dieWarrior, dieShooter, dieSiege)
+  dieWarrior.map(item => {
+    initialWarriorList.map((card, index) => {
+      if(item.id === card.id) {
+        const die = initialWarriorList.splice(index, 1)
+        dieList.push(die[0])
+      }
+    })
+  })
+  dieShooter.map(item => {
+    initialShooterList.map((card, index) => {
+      if(item.id === card.id) {
+        const die = initialShooterList.splice(index, 1)
+        dieList.push(die[0])
+      }
+    })
+  })
+  dieSiege.map(item => {
+    initialSiegeList.map((card, index) => {
+      if(item.id === card.id) {
+        const die = initialSiegeList.splice(index, 1)
+        dieList.push(die[0])
+      }
+    })
+  })
+  store.dispatch('battle/burnAllInitAreaSurvived', {
+    warriorSurvived: initialWarriorList, shooterSurvived: initialShooterList, siegeSurvived: initialSiegeList
+  })
+  console.log(cemeteryList, dieList)
+  store.commit('battle/setCemeteryList', cemeteryList.concat(dieList))
+}
+
+//计算近战战斗力
 function calculateWarriorCombat() {
   const warriorList = store.getters['battle/warriorList']
   const frost = store.getters['battle/weather'].frost
@@ -163,3 +234,7 @@ function delHandCard(Card) {
   const index = store.getters['battle/handCardList'].indexOf(Card)
   store.commit('battle/delHandCard', index)
 }
+
+// 按fn条件将数组分为两个集合
+const bifurcateBy = (arr, fn) =>
+  arr.reduce((acc, val, i) => (acc[fn(val, i) ? 0 : 1].push(val), acc), [[], []])

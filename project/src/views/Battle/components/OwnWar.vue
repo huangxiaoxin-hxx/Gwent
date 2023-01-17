@@ -1,8 +1,10 @@
 <template>
   <div class="w-full h-full flex">
     <div class="left w-60 flex items-center">
-      <div></div>
-      <KingCard />
+      <div class="w-60">
+        <div class=" text-right pr-4 mb-4 text-2xl font-bold">{{ totalCombat }}</div>
+        <KingCard />
+      </div>
     </div>
     <div class="center flex-1 flex flex-col overflow-hidden">
       <div class="flex-1 mb-1">
@@ -43,7 +45,7 @@ export default {
 
   },
   computed: {
-    ...mapGetters('battle', ['camp', 'handCardList'])
+    ...mapGetters('battle', ['camp', 'handCardList', 'totalCombat'])
   },
   async created() {
     this.beginGameRandomCard()

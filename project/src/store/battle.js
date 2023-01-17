@@ -21,7 +21,8 @@ const battle = {
       frost: false,
       fog: false,
       rain: false
-    }
+    },
+    cemeteryList: null,
   },
   actions: {
     async beginGameRandomCard(context) {
@@ -47,6 +48,18 @@ const battle = {
       const initialSiegeList = [...context.getters.initialSiegeList, {...Card}]
       context.commit('setSiegeList', siegeList)
       context.commit('setInitialSiegeList', initialSiegeList) // 需要一个初始的数组保存最开始的战斗力
+    },
+    // 将焚烧后的幸存牌加入战场
+    burnAllAreaSurvived(context, { warriorSurvived, shooterSurvived, siegeSurvived }) {
+      context.commit('setWarriorList', warriorSurvived)
+      context.commit('setShooterList', shooterSurvived)
+      context.commit('setSiegeList', siegeSurvived)
+    },
+    // 原初卡牌对应以上操作
+    burnAllInitAreaSurvived(context, { warriorSurvived, shooterSurvived, siegeSurvived }) {
+      context.commit('setInitialWarriorList', warriorSurvived)
+      context.commit('setInitialShooterList', shooterSurvived)
+      context.commit('setInitialSiegeList', siegeSurvived)
     }
   },
   mutations: {
@@ -97,6 +110,9 @@ const battle = {
         ...state.weather,
         ...obj
       }
+    },
+    setCemeteryList(state, list) {
+      state.cemeteryList = list
     }
   },
   getters: {
@@ -113,7 +129,9 @@ const battle = {
     warriorCombat: state => state.warriorCombat,
     shooterCombat: state => state.shooterCombat,
     siegeCombat: state => state.siegeCombat,
-    weather: state => state.weather
+    totalCombat: state => state.warriorCombat + state.shooterCombat + state.siegeCombat,
+    weather: state => state.weather,
+    cemeteryList: state => state.cemeteryList || [],
   }
 }
 
