@@ -52,7 +52,7 @@ export const neutralCardGroup = [
   {
     id: 1,
     combat: null,
-    position: 'myself',
+    position: 'exchange',
     type: typeList.exchange.type,
     name: '诱饵',
     fieldSelect: false,
@@ -61,7 +61,7 @@ export const neutralCardGroup = [
   {
     id: 2,
     combat: null,
-    position: 'myself',
+    position: 'exchange',
     type: typeList.exchange.type,
     name: '诱饵',
     fieldSelect: false,
@@ -70,7 +70,7 @@ export const neutralCardGroup = [
   {
     id: 3,
     combat: null,
-    position: 'myself',
+    position: 'exchange',
     type: typeList.exchange.type,
     name: '诱饵',
     fieldSelect: false,

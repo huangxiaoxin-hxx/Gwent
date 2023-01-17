@@ -23,7 +23,8 @@ const battle = {
       rain: false
     },
     cemeteryList: null,
-    exchange: false
+    exchange: false,
+    exchangeCard: null,
   },
   actions: {
     async beginGameRandomCard(context) {
@@ -45,6 +46,7 @@ const battle = {
       context.commit('setInitialShooterList', initialShooterList) // 需要一个初始的数组保存最开始的战斗力
     },
     async joinSiegeArea(context, Card) {
+      console.log(Card)
       const siegeList = [...context.getters.siegeList, {...Card}]
       const initialSiegeList = [...context.getters.initialSiegeList, {...Card}]
       context.commit('setSiegeList', siegeList)
@@ -122,7 +124,10 @@ const battle = {
     },
     setExchange(state, bool) {
       state.exchange = bool
-    }
+    },
+    setExchangeCard(state, card) {
+      state.exchangeCard = card
+    },
   },
   getters: {
     handCardList: state => state.handCardList || [],
@@ -141,6 +146,7 @@ const battle = {
     totalCombat: state => state.warriorCombat + state.shooterCombat + state.siegeCombat,
     weather: state => state.weather,
     cemeteryList: state => state.cemeteryList || [],
+    exchangeCard: state => state.exchangeCard || {}
   }
 }
 

@@ -18,7 +18,7 @@ export const playingCardTypeSwitch = (Card) => {
       playingBurn()
       break;
     case typeList.exchange.type:
-      playingExchange()
+      playingExchange(Card)
       break;
     case typeList.frost.type:
       // 打出霜冻牌
@@ -173,8 +173,9 @@ function delInitialArea(dieWarrior, dieShooter, dieSiege) {
 }
 
 // 打出替换牌
-function playingExchange() {
+function playingExchange(Card) {
   store.commit('battle/setExchange', true)
+  store.commit('battle/setExchangeCard', Card)
 }
 
 // 替换牌逻辑
@@ -183,7 +184,8 @@ export function exchangeLogic(card, area) {
     areaName: null,
     initAreaName: null,
     setAreaName: null,
-    setInitAreaName: null
+    setInitAreaName: null,
+    position: null
   }
   switch (area) {
     case 'warriorArea':
@@ -191,18 +193,21 @@ export function exchangeLogic(card, area) {
       areaUseObj.initAreaName = 'initialWarriorList'
       areaUseObj.setAreaName = 'setWarriorList'
       areaUseObj.setInitAreaName = 'setInitialWarriorList'
+      areaUseObj.position = 'joinWarriorArea'
       break;
     case 'shooterArea':
       areaUseObj.areaName = 'shooterList'
       areaUseObj.initAreaName = 'initialShooterList'
       areaUseObj.setAreaName = 'setShooterList'
       areaUseObj.setInitAreaName = 'setInitialShooterList'
+      areaUseObj.position = 'joinShooterArea'
       break;
     case 'siegeArea':
       areaUseObj.areaName = 'siegeList'
       areaUseObj.initAreaName = 'initialSiegeList'
       areaUseObj.setAreaName = 'setSiegeList'
-      areaUseObj.setInitAreaName = 'setInitialSiegeListList'
+      areaUseObj.setInitAreaName = 'setInitialSiegeList'
+      areaUseObj.position = 'joinSiegeArea'
       break;
   }
   const areaList = cloneDeep(store.getters[`battle/${areaUseObj.areaName}`])
@@ -221,6 +226,9 @@ export function exchangeLogic(card, area) {
   store.commit(`battle/${areaUseObj.setAreaName}`, areaList)
   store.commit(`battle/${areaUseObj.setInitAreaName}`, initAreaList)
   store.commit('battle/setExchange', false)
+  const exchangeCard = store.getters['battle/exchangeCard']
+  console.log(exchangeCard)
+  store.dispatch(`battle/${areaUseObj.position}`, exchangeCard)
   switch (area) {
     case 'warriorArea':
       calculateWarriorCombat()
