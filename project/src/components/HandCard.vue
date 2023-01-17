@@ -17,13 +17,16 @@
           <el-button v-if="statue === 'handArea'" type="text" size="mini" @click="playingCard">出牌</el-button>
         </div>
       </div>
+      <div v-show="exchange && cardData.fieldSelect" class="absolute w-full h-full bg-opacity-5 bg-gray-800 z-20">
+        <el-button type="text" class="mt-10" @click="playingExchange">替换</el-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { positionType, abilityType } from '@/static/cardConfig'
-import { playingCardTypeSwitch } from '@/cardRule'
+import { playingCardTypeSwitch, exchangeLogic } from '@/cardRule'
 export default {
   name: "Card",
   props: {
@@ -34,6 +37,10 @@ export default {
     statue: {
       type: String,
       default: 'handArea'
+    },
+    exchange: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -51,6 +58,9 @@ export default {
     playingCard() {
       playingCardTypeSwitch(this.cardData)
     },
+    playingExchange() {
+      exchangeLogic(this.cardData, this.statue)
+    }
   }
 }
 </script>

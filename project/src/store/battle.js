@@ -23,6 +23,7 @@ const battle = {
       rain: false
     },
     cemeteryList: null,
+    exchange: false
   },
   actions: {
     async beginGameRandomCard(context) {
@@ -60,6 +61,11 @@ const battle = {
       context.commit('setInitialWarriorList', warriorSurvived)
       context.commit('setInitialShooterList', shooterSurvived)
       context.commit('setInitialSiegeList', siegeSurvived)
+    },
+    // 增加一张手牌
+    addOneHandCard(context, Card) {
+      const handCardList = context.getters.handCardList
+      context.commit('setHandCardList', [...handCardList, Card])
     }
   },
   mutations: {
@@ -113,6 +119,9 @@ const battle = {
     },
     setCemeteryList(state, list) {
       state.cemeteryList = list
+    },
+    setExchange(state, bool) {
+      state.exchange = bool
     }
   },
   getters: {

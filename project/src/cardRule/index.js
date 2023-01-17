@@ -17,6 +17,9 @@ export const playingCardTypeSwitch = (Card) => {
     case typeList.burn.type:
       playingBurn()
       break;
+    case typeList.exchange.type:
+      playingExchange()
+      break;
     case typeList.frost.type:
       // 打出霜冻牌
       playingFrost()
@@ -98,9 +101,7 @@ function playingSunny() {
   store.commit('battle/setShooterList', deepShooterData)
   store.commit('battle/setSiegeList', deepSiegeData)
   // 打出晴天，重新计算战斗力
-  calculateWarriorCombat()
-  calculateShooterCombat()
-  calculateSiegeCombat()
+  calculateAllCombat()
 }
 
 // 打出灼烧牌,烧毁场上战力最高的可选牌
@@ -128,6 +129,8 @@ function playingBurn() {
   const dieSiege = siegeGather[0]
   // 需要将原初copy战场组initial也删除对应卡牌，并放入墓地
   delInitialArea(dieWarrior, dieShooter, dieSiege)
+  // 重新计算战力
+  calculateAllCombat()
 }
 
 // 删除原初卡组区域
@@ -169,6 +172,70 @@ function delInitialArea(dieWarrior, dieShooter, dieSiege) {
   store.commit('battle/setCemeteryList', cemeteryList.concat(dieList))
 }
 
+// 打出替换牌
+function playingExchange() {
+  store.commit('battle/setExchange', true)
+}
+
+// 替换牌逻辑
+export function exchangeLogic(card, area) {
+  let areaUseObj = {
+    areaName: null,
+    initAreaName: null,
+    setAreaName: null,
+    setInitAreaName: null
+  }
+  switch (area) {
+    case 'warriorArea':
+      areaUseObj.areaName = 'warriorList'
+      areaUseObj.initAreaName = 'initialWarriorList'
+      areaUseObj.setAreaName = 'setWarriorList'
+      areaUseObj.setInitAreaName = 'setInitialWarriorList'
+      break;
+    case 'shooterArea':
+      areaUseObj.areaName = 'shooterList'
+      areaUseObj.initAreaName = 'initialShooterList'
+      areaUseObj.setAreaName = 'setShooterList'
+      areaUseObj.setInitAreaName = 'setInitialShooterList'
+      break;
+    case 'siegeArea':
+      areaUseObj.areaName = 'siegeList'
+      areaUseObj.initAreaName = 'initialSiegeList'
+      areaUseObj.setAreaName = 'setSiegeList'
+      areaUseObj.setInitAreaName = 'setInitialSiegeListList'
+      break;
+  }
+  const areaList = cloneDeep(store.getters[`battle/${areaUseObj.areaName}`])
+  const initAreaList = cloneDeep(store.getters[`battle/${areaUseObj.initAreaName}`])
+  areaList.map((item, index) => {
+    if(item.id === card.id) {
+      areaList.splice(index, 1)
+    }
+  })
+  initAreaList.map((item, index) => {
+    if(item.id === card.id) {
+      const initCard = initAreaList.splice(index, 1)
+      store.dispatch('battle/addOneHandCard', initCard[0])
+    }
+  })
+  store.commit(`battle/${areaUseObj.setAreaName}`, areaList)
+  store.commit(`battle/${areaUseObj.setInitAreaName}`, initAreaList)
+  store.commit('battle/setExchange', false)
+  switch (area) {
+    case 'warriorArea':
+      calculateWarriorCombat()
+      break;
+    case 'shooterArea':
+      calculateShooterCombat()
+      break;
+    case 'siegeArea':
+      calculateSiegeCombat()
+      break;
+  }
+}
+
+
+// 注，因为后续出牌也需要判断是否有天气牌影响，所以在计算战斗力里判断天气
 //计算近战战斗力
 function calculateWarriorCombat() {
   const warriorList = store.getters['battle/warriorList']
@@ -227,6 +294,13 @@ function calculateSiegeCombat() {
     sumCombat += item.combat
   })
   store.commit('battle/setSiegeCombat', sumCombat)
+}
+
+// 重新计算所有战斗力
+function calculateAllCombat() {
+  calculateWarriorCombat()
+  calculateShooterCombat()
+  calculateSiegeCombat()
 }
 
 // 打出一张牌就删掉一张手牌
