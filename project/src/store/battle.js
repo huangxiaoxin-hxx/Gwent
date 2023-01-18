@@ -1,6 +1,6 @@
 import { getLocalItem } from '@/indexDB'
-import { getHandCardGroup } from '@/util'
-
+import { getHandCardGroup, getStorage } from '@/util'
+const formInline = getStorage('formInline')
 const battle = {
   namespaced: true,
   state: {
@@ -159,9 +159,23 @@ const battle = {
     weather: state => state.weather,
     cemeteryList: state => state.cemeteryList || [],
     cemeteryView: state => state.cemeteryView,
+    exchange: state => state.exchange,
     exchangeCard: state => state.exchangeCard || {},
     isDoctor: state => state.isDoctor,
     isGiveUp: state => state.isGiveUp,
+    sendData: state => {
+      return {
+        username: formInline.username,
+        handCardList: state.handCardList || [],
+        kingCard: state.kingCard || {},
+        warriorList: state.warriorList || [],
+        shooterList: state.shooterList || [],
+        siegeList: state.siegeList || [],
+        weather: state.weather,
+        totalCombat: state.warriorCombat + state.shooterCombat + state.siegeCombat,
+        isGiveUp: state.isGiveUp
+      }
+    }
   }
 }
 

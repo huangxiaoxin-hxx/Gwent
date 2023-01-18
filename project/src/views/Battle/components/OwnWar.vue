@@ -8,13 +8,13 @@
     </div>
     <div class="center flex-1 flex flex-col overflow-hidden">
       <div class="flex-1 mb-1">
-        <WarriorArea />
+        <WarriorArea :warriorList="warriorList" :exchange="exchange" statue="warriorArea" />
       </div>
       <div class="flex-1 mb-1">
-        <ShooterArea />
+        <ShooterArea :shooterList="shooterList" :exchange="exchange" statue="shooterArea" />
       </div>
       <div class="flex-1 mb-1">
-        <SiegeArea />
+        <SiegeArea :siegeList="siegeList" :exchange="exchange" statue="siegeArea" />
       </div>
       <div class="flex-1">
         <HandArea />
@@ -51,7 +51,7 @@ export default {
     ...mapActions('battle', ['beginGameRandomCard']),
   },
   computed: {
-    ...mapGetters('battle', ['camp', 'handCardList', 'totalCombat'])
+    ...mapGetters('battle', ['camp', 'handCardList', 'totalCombat', 'warriorList', 'shooterList', 'siegeList', 'exchange'])
   },
   async created() {
     this.beginGameRandomCard()

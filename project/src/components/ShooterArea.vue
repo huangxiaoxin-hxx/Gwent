@@ -2,22 +2,28 @@
   <div class="hand-area flex h-full w-full overflow-hidden">
     <div class="w-24 h-full border-2 mr-2 leading-loose">号角区</div>
     <div class="overflow-scroll flex-1 h-full flex">
-      <HandCard v-for="(item) in shooterList" :key="item.id" :cardData="item" statue="shooterArea" :exchange="exchange"/>
+      <HandCard v-for="(item) in shooterList" :key="item.id" :cardData="item" :exchange="exchange"/>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
 import HandCard from '@/components/HandCard'
 export default {
   name: "ShooterArea",
+  props: {
+    shooterList: {
+      type: Array,
+      default: () => []
+    },
+    exchange: {
+      type: Boolean,
+      default: false
+    },
+    statue: String
+  },
   components: {
     HandCard
-  },
-  computed: {
-    ...mapGetters('battle', ['shooterList']),
-    ...mapState('battle', ['exchange'])
   }
 }
 </script>

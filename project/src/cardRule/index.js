@@ -1,9 +1,9 @@
 import store from '@/store'
 import { typeList } from '@/static/cardConfig'
 import { cloneDeep } from 'lodash'
-// import { pubSub } from '@/main'
-// import { getStorage } from '@/util'
-// const formInline = getStorage('formInline')
+import { pubSub } from '@/main'
+import { getStorage } from '@/util'
+const formInline = getStorage('formInline')
 // 出牌逻辑函数
 // export const abilityType = {
 //   Doctor:       '医生',
@@ -70,17 +70,7 @@ export const playingCardPositionSwitch = (Card) => {
   }
   // 打出一张手牌，将该牌从手中移
   delHandCard(Card)
-  // const warriorList = store.getters['battle/warriorList']
-  // pubSub.publish({
-  //   channel: formInline.roomId,
-  //   message: JSON.stringify(warriorList),
-  //   onSuccess : function () {
-  //       console.log("发送成功");
-  //   },
-  //   onFailed : function (error) {
-  //       console.log("消息发送失败，错误编码：" + error.code + " 错误信息：" + error.content);
-  //   }
-  // });
+  sendData()
 }
 // 打出霜冻
 function playingFrost() {
@@ -240,7 +230,6 @@ export function exchangeLogic(card, area) {
   store.commit(`battle/${areaUseObj.setInitAreaName}`, initAreaList)
   store.commit('battle/setExchange', false)
   const exchangeCard = store.getters['battle/exchangeCard']
-  console.log(exchangeCard)
   store.dispatch(`battle/${areaUseObj.position}`, exchangeCard)
   switch (area) {
     case 'warriorArea':
@@ -253,6 +242,7 @@ export function exchangeLogic(card, area) {
       calculateSiegeCombat()
       break;
   }
+  sendData()
 }
 
 // 打出医生牌
@@ -346,6 +336,21 @@ function calculateAllCombat() {
 function delHandCard(Card) {
   const index = store.getters['battle/handCardList'].indexOf(Card)
   store.commit('battle/delHandCard', index)
+}
+
+// 每出一张牌或其他操作，将我放数据发送出去
+export function sendData() {
+  const data = store.getters['battle/sendData']
+  pubSub.publish({
+    channel: formInline.roomId,
+    message: JSON.stringify(data),
+    onSuccess : function () {
+        console.log("发送成功");
+    },
+    onFailed : function (error) {
+        console.log("消息发送失败，错误编码：" + error.code + " 错误信息：" + error.content);
+    }
+  });
 }
 
 // 按fn条件将数组分为两个集合

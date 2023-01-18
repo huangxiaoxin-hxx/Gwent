@@ -8,16 +8,21 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
 import HandCard from '@/components/HandCard'
 export default {
   name: "SiegeArea",
+  props: {
+    siegeList: {
+      type: Array,
+      default: () => []
+    },
+    exchange: {
+      type: Boolean,
+      default: false
+    }
+  },
   components: {
     HandCard
   },
-  computed: {
-    ...mapGetters('battle', ['siegeList']),
-    ...mapState('battle', ['exchange'])
-  }
 }
 </script>

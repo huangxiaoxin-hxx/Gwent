@@ -2,7 +2,7 @@ import moment from "moment";
 // 随机取10张牌
 export const getHandCardGroup = (list) => {
   const cardList = shuffle(list)
-  const handCardList = cardList.splice(0,30)
+  const handCardList = cardList.splice(0,10)
   return {
     cardList,
     handCardList

@@ -1,6 +1,8 @@
 <template>
   <div class="battle h-screen w-full">
-    <div class="h-1/2"></div>
+    <div class="h-1/2">
+      <EnemyWar />
+    </div>
     <div class="h-1/2">
       <OwnWar />
     </div>
@@ -11,15 +13,21 @@
 </template>
 
 <script>
+import EnemyWar from './components/EnemyWar.vue'
 import OwnWar from './components/OwnWar.vue'
 import WeatherArea from '@/components/WeatherArea.vue'
 import { pubSub } from '@/main'
 import { getStorage } from '@/util'
+import { mapMutations } from 'vuex'
 export default {
   name: "Battle",
   components: {
     OwnWar,
-    WeatherArea
+    WeatherArea,
+    EnemyWar
+  },
+  methods: {
+    ...mapMutations('enemy', ['setEnemyInfo'])
   },
   created() {
     const formInline = getStorage('formInline')
@@ -27,7 +35,10 @@ export default {
       channel: formInline.roomId,
       onMessage: (message) => {
         const data = JSON.parse(message.content)
-        console.log(data)
+        console.log(data.username, formInline.username)
+        if(data.username !== formInline.username) {
+          this.setEnemyInfo(data)
+        }
       },
       onSuccess: () => {
         console.log("监听新消息成功")
