@@ -16,7 +16,7 @@
 </template>
 
 <script>
-
+import { setStorage, getStorage } from '@/util'
 export default {
   name: 'JoinGame',
   data() {
@@ -29,17 +29,16 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.formInline)
+      setStorage('formInline', this.formInline)
       this.goEasy.connect({
         id: this.formInline.roomId, //pubsub选填，im必填，最大长度60字符
         data:{
-          avatar: this.formInline,
-          nickname: this.formInline
+          nickname: this.formInline.username
         }, //必须是一个对象，pubsub选填，im必填，最大长度300字符，用于上下线提醒和查询在线用户列表时，扩展更多的属性
         onSuccess: () => {  //连接成功
           console.log("GoEasy connect successfully.") //连接成功
           this.$router.push({
-            path: '/battle'
+            path: '/selectCard'
           })
         },
         onFailed: (error) => { //连接失败
@@ -49,6 +48,12 @@ export default {
           console.log("GoEasy is connecting", attempts);
         }
       });
+    }
+  },
+  created() {
+    const formInline = getStorage('formInline')
+    if(formInline) {
+      this.formInline = formInline
     }
   }
 }

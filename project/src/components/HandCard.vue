@@ -14,7 +14,10 @@
           :content="cardData.desc">
             <el-button slot="reference" type="text" size="mini">查看详情</el-button>
           </el-popover>
-          <el-button v-if="statue === 'handArea'" type="text" size="mini" @click="playingCard">出牌</el-button>
+          <div v-show="!isGiveUp">
+            <el-button v-if="statue === 'handArea'" type="text" size="mini" @click="playingCard">出牌</el-button>
+            <el-button v-if="statue === 'doctorPlay'" type="text" size="mini" @click="doctorPlayingCard">出牌</el-button>
+          </div>
         </div>
       </div>
       <div v-show="exchange && cardData.fieldSelect" class="absolute w-full h-full bg-opacity-5 bg-gray-800 z-20">
@@ -26,7 +29,8 @@
 
 <script>
 import { positionType, abilityType } from '@/static/cardConfig'
-import { playingCardTypeSwitch, exchangeLogic } from '@/cardRule'
+import { playingCardTypeSwitch, exchangeLogic, beforeDoctorPlaying } from '@/cardRule'
+import { mapGetters } from 'vuex'
 export default {
   name: "Card",
   props: {
@@ -44,6 +48,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('battle', ['isGiveUp']),
     borderColor() {
       return this.cardData.hero ? 'border-yellow-500' : 'border-black'
     },
@@ -60,6 +65,10 @@ export default {
     },
     playingExchange() {
       exchangeLogic(this.cardData, this.statue)
+    },
+    doctorPlayingCard() {
+      beforeDoctorPlaying(this.cardData)
+      playingCardTypeSwitch(this.cardData)
     }
   }
 }

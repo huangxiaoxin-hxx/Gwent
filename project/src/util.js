@@ -1,5 +1,5 @@
+import moment from "moment";
 // 随机取10张牌
-
 export const getHandCardGroup = (list) => {
   const cardList = shuffle(list)
   const handCardList = cardList.splice(0,30)
@@ -25,4 +25,33 @@ function shuffle(arr){
       arr.splice(random, 1)
   }
   return result;
+}
+
+
+export function setStorage(key, val, cacheSeconds = null) {
+  localStorage.setItem(key, JSON.stringify(val));
+  if (cacheSeconds > 0) {
+    const duration = moment()
+      .add(cacheSeconds, "seconds")
+      .valueOf();
+    localStorage.setItem(key + "_cache", duration);
+  }
+}
+
+export function removeStorage(key) {
+  localStorage.removeItem(key);
+  localStorage.removeItem(key + "_cache");
+}
+
+export function getStorage(key, defaultVal = null) {
+  const val = JSON.parse(localStorage.getItem(key));
+  const valCache = localStorage.getItem(key + "_cache");
+  if (valCache > 0) {
+    const currentTimestamp = moment().valueOf();
+    if (valCache < currentTimestamp) {
+      removeStorage(key);
+      return defaultVal;
+    }
+  }
+  return val !== "" ? val : defaultVal;
 }

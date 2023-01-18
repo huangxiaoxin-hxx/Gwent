@@ -1,6 +1,9 @@
 import store from '@/store'
 import { typeList } from '@/static/cardConfig'
 import { cloneDeep } from 'lodash'
+// import { pubSub } from '@/main'
+// import { getStorage } from '@/util'
+// const formInline = getStorage('formInline')
 // 出牌逻辑函数
 // export const abilityType = {
 //   Doctor:       '医生',
@@ -12,7 +15,7 @@ import { cloneDeep } from 'lodash'
 export const playingCardTypeSwitch = (Card) => {
   switch (Card.type) {
     case typeList.doctor.type:
-
+      playingDoctor()
       break;
     case typeList.burn.type:
       playingBurn()
@@ -38,7 +41,6 @@ export const playingCardTypeSwitch = (Card) => {
   }
   playingCardPositionSwitch(Card)
 }
-
 
 // export const positionType = {
 //   weather:  "天气牌",
@@ -68,6 +70,17 @@ export const playingCardPositionSwitch = (Card) => {
   }
   // 打出一张手牌，将该牌从手中移
   delHandCard(Card)
+  // const warriorList = store.getters['battle/warriorList']
+  // pubSub.publish({
+  //   channel: formInline.roomId,
+  //   message: JSON.stringify(warriorList),
+  //   onSuccess : function () {
+  //       console.log("发送成功");
+  //   },
+  //   onFailed : function (error) {
+  //       console.log("消息发送失败，错误编码：" + error.code + " 错误信息：" + error.content);
+  //   }
+  // });
 }
 // 打出霜冻
 function playingFrost() {
@@ -242,6 +255,24 @@ export function exchangeLogic(card, area) {
   }
 }
 
+// 打出医生牌
+function playingDoctor() {
+  const cemeteryList = store.getters['battle/cemeteryList']
+  const list = cemeteryList.filter(item => item.fieldSelect)
+  if(list.length !== 0) {
+    store.commit('battle/setCemeteryView', true)
+    store.commit('battle/setIsDoctor', true)
+  }
+}
+// 医生复活一张牌之前的逻辑
+export function beforeDoctorPlaying(Card) {
+  // del cemetery Card
+  const cemeteryList = cloneDeep(store.getters['battle/cemeteryList'])
+  const list = cemeteryList.filter(item => item.id !== Card.id)
+  store.commit('battle/setCemeteryList', list)
+  store.commit('battle/setCemeteryView', false)
+  store.commit('battle/isDoctor', false)
+}
 
 // 注，因为后续出牌也需要判断是否有天气牌影响，所以在计算战斗力里判断天气
 //计算近战战斗力

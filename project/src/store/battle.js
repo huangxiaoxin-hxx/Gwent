@@ -23,8 +23,11 @@ const battle = {
       rain: false
     },
     cemeteryList: null,
+    cemeteryView: false,
     exchange: false,
     exchangeCard: null,
+    isDoctor: false, // 是否是因为医生展开的墓地
+    isGiveUp: false, // 弃牌标记
   },
   actions: {
     async beginGameRandomCard(context) {
@@ -122,12 +125,21 @@ const battle = {
     setCemeteryList(state, list) {
       state.cemeteryList = list
     },
+    setCemeteryView(state, bool) {
+      state.cemeteryView = bool
+    },
     setExchange(state, bool) {
       state.exchange = bool
     },
     setExchangeCard(state, card) {
       state.exchangeCard = card
     },
+    setIsDoctor(state, bool) {
+      state.isDoctor = bool
+    },
+    setIsGiveUp(state, bool) {
+      state.isGiveUp = bool
+    }
   },
   getters: {
     handCardList: state => state.handCardList || [],
@@ -146,7 +158,10 @@ const battle = {
     totalCombat: state => state.warriorCombat + state.shooterCombat + state.siegeCombat,
     weather: state => state.weather,
     cemeteryList: state => state.cemeteryList || [],
-    exchangeCard: state => state.exchangeCard || {}
+    cemeteryView: state => state.cemeteryView,
+    exchangeCard: state => state.exchangeCard || {},
+    isDoctor: state => state.isDoctor,
+    isGiveUp: state => state.isGiveUp,
   }
 }
 
