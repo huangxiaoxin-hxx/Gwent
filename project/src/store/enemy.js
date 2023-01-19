@@ -13,7 +13,7 @@ const enemy = {
     },
     setRandom(state, num) {
       state.random = num
-    }
+    },
   },
   actions: {
     startGameInfo(context, { data, random }) {

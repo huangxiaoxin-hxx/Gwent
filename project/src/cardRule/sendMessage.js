@@ -4,17 +4,50 @@ import { getStorage } from '@/util'
 const formInline = getStorage('formInline')
 
 // 每出一张牌或其他操作，将我放数据发送出去
-export function sendData(type) {
+export function sendData(type, card = {}) {
   const data = store.getters['battle/sendData']
   switch (type) {
     case 'start': // 我方准备完毕，发送信息告知对方
       sendStart(data)
       break;
-    case 'playing': // 我方打出一张牌
+    case 'playing': // 我方打出一张普通牌
       playingCard(data)
+      break;
+    case 'spy': // 我方打出一张间谍牌
+      playingSpy(data, card)
+      break;
+    case 'callback': // 特殊牌反馈给对方
+      callback(data)
       break;
   }
   
+}
+
+function sendMessage(message) {
+  pubSub.publish({
+    channel: formInline.roomId,
+    message: JSON.stringify(message),
+    onSuccess : function () {
+      console.log("发送成功");
+      store.commit('battle/setIsPlaying', false) // 出完牌将我方出牌置为false
+    },
+    onFailed : function (error) {
+      console.log("消息发送失败，错误编码：" + error.code + " 错误信息：" + error.content);
+    }
+  });
+}
+
+function callbackMessage(message) {
+  pubSub.publish({
+    channel: formInline.roomId,
+    message: JSON.stringify(message),
+    onSuccess : function () {
+        console.log("发送成功");
+    },
+    onFailed : function (error) {
+        console.log("消息发送失败，错误编码：" + error.code + " 错误信息：" + error.content);
+    }
+  });
 }
 
 function sendStart(data) {
@@ -26,16 +59,7 @@ function sendStart(data) {
     data: data,
     random: random
   }
-  pubSub.publish({
-    channel: formInline.roomId,
-    message: JSON.stringify(message),
-    onSuccess : function () {
-        console.log("发送成功");
-    },
-    onFailed : function (error) {
-        console.log("消息发送失败，错误编码：" + error.code + " 错误信息：" + error.content);
-    }
-  });
+  callbackMessage(message)
 }
 
 function judgeMyStart(random) { // 比大小决定谁先出牌
@@ -52,15 +76,22 @@ function playingCard(data) {
     type: 'playing',
     data: data,
   }
-  pubSub.publish({
-    channel: formInline.roomId,
-    message: JSON.stringify(message),
-    onSuccess : function () {
-      console.log("发送成功");
-      store.commit('battle/setIsPlaying', false) // 出完牌将我方出牌置为false
-    },
-    onFailed : function (error) {
-      console.log("消息发送失败，错误编码：" + error.code + " 错误信息：" + error.content);
-    }
-  });
+  sendMessage(message)
+}
+
+function playingSpy(data, card) {
+  const message = {
+    type: 'spy',
+    data: data,
+    card: card,
+  }
+  sendMessage(message)
+}
+
+function callback(data) {
+  const message = {
+    type: 'callback',
+    data: data
+  }
+  callbackMessage(message)
 }

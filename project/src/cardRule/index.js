@@ -22,6 +22,9 @@ export const playingCardTypeSwitch = (Card) => {
     case typeList.exchange.type:
       playingExchange(Card)
       break;
+    case typeList.spy.type:
+      playingSpy()
+      break;
     case typeList.frost.type:
       // 打出霜冻牌
       playingFrost()
@@ -69,7 +72,14 @@ export const playingCardPositionSwitch = (Card) => {
   }
   // 打出一张手牌，将该牌从手中移
   delHandCard(Card)
-  sendData('playing')
+  switch (Card.type) {
+    case typeList.spy.type:
+      sendData('spy', Card)
+      break;
+    default:
+      sendData('playing')
+      break;
+  }
 }
 // 打出霜冻
 function playingFrost() {
@@ -263,9 +273,17 @@ export function beforeDoctorPlaying(Card) {
   store.commit('battle/isDoctor', false)
 }
 
+// 打出间谍牌
+function playingSpy() {
+  const cardGroup = cloneDeep(store.getters['battle/cardGroup'])
+  const addCard = cardGroup.splice(0,2)
+  store.dispatch('battle/addHandCardList', addCard)
+  store.commit('battle/setCardGroup', cardGroup)
+}
+
 // 注，因为后续出牌也需要判断是否有天气牌影响，所以在计算战斗力里判断天气
 //计算近战战斗力
-function calculateWarriorCombat() {
+export function calculateWarriorCombat() {
   const warriorList = store.getters['battle/warriorList']
   const frost = store.getters['battle/weather'].frost
   if(frost) {
@@ -285,7 +303,7 @@ function calculateWarriorCombat() {
 }
 
 //计算远程战斗力
-function calculateShooterCombat() {
+export function calculateShooterCombat() {
   const shooterList = store.getters['battle/shooterList']
   const fog = store.getters['battle/weather'].fog
   if(fog) {
@@ -305,7 +323,7 @@ function calculateShooterCombat() {
 }
 
 // 计算攻城战斗力
-function calculateSiegeCombat() {
+export function calculateSiegeCombat() {
   const siegeList = store.getters['battle/siegeList']
   const rain = store.getters['battle/weather'].rain
   if(rain) {

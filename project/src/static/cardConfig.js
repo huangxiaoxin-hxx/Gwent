@@ -260,7 +260,7 @@ export const neutralCardGroup = [
   {
     id: 24,
     combat: 0,
-    position: 'warrior',
+    position: 'spy-warrior',
     hero: true,
     type: typeList.spy.type,
     name: '神秘的精灵',
@@ -327,7 +327,7 @@ export const NorthCardGroup = [
   {
     id: 31,
     combat: 1,
-    position: 'siege',
+    position: 'spy-siege',
     type: typeList.spy.type,
     name: '塔勒',
     fieldSelect: true,
@@ -336,7 +336,7 @@ export const NorthCardGroup = [
   {
     id: 32,
     combat: 4,
-    position: 'warrior',
+    position: 'spy-warrior',
     type: typeList.spy.type,
     name: '迪科斯特',
     fieldSelect: true,
@@ -345,7 +345,7 @@ export const NorthCardGroup = [
   {
     id: 33,
     combat: 5,
-    position: 'warrior',
+    position: 'spy-warrior',
     type: typeList.spy.type,
     name: '史登尼斯王子',
     fieldSelect: true,
@@ -475,7 +475,7 @@ export const NilfgaardianCardGroup = [
   {
     id: 47,
     combat: 9,
-    position: 'warrior',
+    position: 'spy-warrior',
     type: typeList.spy.type,
     name: '史凯伦',
     fieldSelect: true,
@@ -484,7 +484,7 @@ export const NilfgaardianCardGroup = [
   {
     id: 48,
     combat: 7,
-    position: 'warrior',
+    position: 'spy-warrior',
     type: typeList.spy.type,
     name: '希拉德',
     fieldSelect: true,
@@ -493,7 +493,7 @@ export const NilfgaardianCardGroup = [
   {
     id: 49,
     combat: 4,
-    position: 'warrior',
+    position: 'spy-warrior',
     type: typeList.spy.type,
     name: '瓦提尔',
     fieldSelect: true,
@@ -614,7 +614,10 @@ export const positionType = {
   warrior:  "战士",
   shooter:  "射手",
   siege:    "攻城",
-  king:     "国王"
+  king:     "国王",
+  'spy-warrior':  "战士",
+  'spy-shooter':  "射手",
+  'spy-siege':    "攻城",
 }
 
 export const abilityType = {

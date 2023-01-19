@@ -1,8 +1,10 @@
 import { pubSub } from '@/main'
 import { getStorage } from '@/util'
 import store from '@/store'
-const formInline = getStorage('formInline')
+import { calculateWarriorCombat, calculateShooterCombat, calculateSiegeCombat } from './index.js'
+import { sendData } from './sendMessage'
 
+const formInline = getStorage('formInline')
 export function startSubscribe() {
   pubSub.subscribe({
     channel: formInline.roomId,
@@ -30,6 +32,12 @@ export function switchMessageType(data) {
     case 'playing':
       plyingMessage(data)
       break;
+    case 'spy':
+      spyMessage(data)
+      break;
+    case 'callback':
+      callbackMessage(data)
+      break;
   }
 }
 
@@ -47,4 +55,31 @@ function startMessage(data) {
 function plyingMessage(data) {
   store.commit('enemy/setEnemyInfo', data.data)
   store.commit('battle/setIsPlaying', true)
+}
+
+function spyMessage(data) {
+  store.commit('enemy/setEnemyInfo', data.data)
+  store.commit('battle/setIsPlaying', true)
+  const spy = data.card
+  console.log(spy.position)
+  switch (spy.position) {
+    case 'spy-warrior':
+      store.dispatch('battle/joinWarriorArea', spy)
+      calculateWarriorCombat()
+      break;
+    case 'spy-shooter':
+      store.dispatch('battle/joinShooterArea', spy)
+      calculateShooterCombat()
+      break;
+    case 'spy-siege':
+      store.dispatch('battle/joinSiegeArea', spy)
+      calculateSiegeCombat()
+      break;
+  }
+  sendData('callback')
+}
+
+// 对方反馈我方出牌行为，所以我方不能出牌
+function callbackMessage(data) {
+  store.commit('enemy/setEnemyInfo', data.data)
 }

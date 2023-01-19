@@ -73,6 +73,10 @@ const battle = {
     addOneHandCard(context, Card) {
       const handCardList = context.getters.handCardList
       context.commit('setHandCardList', [...handCardList, Card])
+    },
+    addHandCardList(context, list) {
+      const handCardList = context.getters.handCardList
+      context.commit('setHandCardList', [...handCardList, ...list])
     }
   },
   mutations: {
