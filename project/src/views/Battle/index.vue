@@ -16,9 +16,6 @@
 import EnemyWar from './components/EnemyWar.vue'
 import OwnWar from './components/OwnWar.vue'
 import WeatherArea from '@/components/WeatherArea.vue'
-import { pubSub } from '@/main'
-import { getStorage } from '@/util'
-import { mapMutations } from 'vuex'
 export default {
   name: "Battle",
   components: {
@@ -26,28 +23,6 @@ export default {
     WeatherArea,
     EnemyWar
   },
-  methods: {
-    ...mapMutations('enemy', ['setEnemyInfo'])
-  },
-  created() {
-    const formInline = getStorage('formInline')
-    pubSub.subscribe({
-      channel: formInline.roomId,
-      onMessage: (message) => {
-        const data = JSON.parse(message.content)
-        console.log(data.username, formInline.username)
-        if(data.username !== formInline.username) {
-          this.setEnemyInfo(data)
-        }
-      },
-      onSuccess: () => {
-        console.log("监听新消息成功")
-      },
-      onFailed: (error) => {
-        console.log("订阅消息失败, code:"+error.code+ ",错误信息:"+error.content);
-      }
-    })
-  }
 }
 </script>
 

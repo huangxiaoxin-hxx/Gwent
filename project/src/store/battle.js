@@ -28,6 +28,8 @@ const battle = {
     exchangeCard: null,
     isDoctor: false, // 是否是因为医生展开的墓地
     isGiveUp: false, // 弃牌标记
+    isPlaying: false, // 是否到我放出牌
+    random: null
   },
   actions: {
     async beginGameRandomCard(context) {
@@ -139,6 +141,12 @@ const battle = {
     },
     setIsGiveUp(state, bool) {
       state.isGiveUp = bool
+    },
+    setIsPlaying(state, bool) {
+      state.isPlaying = bool
+    },
+    setRandom(state, num) {
+      state.random = num
     }
   },
   getters: {
@@ -163,6 +171,7 @@ const battle = {
     exchangeCard: state => state.exchangeCard || {},
     isDoctor: state => state.isDoctor,
     isGiveUp: state => state.isGiveUp,
+    isPlaying: state => state.isPlaying,
     sendData: state => {
       return {
         username: formInline.username,
@@ -175,7 +184,8 @@ const battle = {
         totalCombat: state.warriorCombat + state.shooterCombat + state.siegeCombat,
         isGiveUp: state.isGiveUp
       }
-    }
+    },
+    random: state => state.random
   }
 }
 

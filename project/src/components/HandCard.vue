@@ -14,7 +14,7 @@
           :content="cardData.desc">
             <el-button slot="reference" type="text" size="mini">查看详情</el-button>
           </el-popover>
-          <div v-show="!isGiveUp">
+          <div v-show="!isGiveUp && isPlaying">
             <el-button v-if="statue === 'handArea'" type="text" size="mini" @click="playingCard">出牌</el-button>
             <el-button v-if="statue === 'doctorPlay'" type="text" size="mini" @click="doctorPlayingCard">出牌</el-button>
           </div>
@@ -48,7 +48,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('battle', ['isGiveUp']),
+    ...mapGetters('battle', ['isGiveUp', 'isPlaying']),
     borderColor() {
       return this.cardData.hero ? 'border-yellow-500' : 'border-black'
     },

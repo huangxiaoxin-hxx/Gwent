@@ -3,7 +3,7 @@
     <div class="left w-60 flex items-center">
       <div class="w-60 relative">
         <div class=" text-right pr-4 text-2xl font-bold absolute right-0">{{ totalCombat }}</div>
-        <KingCard />
+        <KingCard :kingCard="kingCard" statue="owner" />
       </div>
     </div>
     <div class="center flex-1 flex flex-col overflow-hidden">
@@ -36,6 +36,7 @@ import ShooterArea from '@/components/ShooterArea.vue'
 import SiegeArea from '@/components/SiegeArea.vue'
 import CemeteryArea from '@/components/CemeteryArea.vue'
 import GiveUpButton from '@/components/GiveUpButton.vue'
+import { sendData } from '@/cardRule/sendMessage'
 export default {
   name: "OwnWar",
   components: {
@@ -51,10 +52,11 @@ export default {
     ...mapActions('battle', ['beginGameRandomCard']),
   },
   computed: {
-    ...mapGetters('battle', ['camp', 'handCardList', 'totalCombat', 'warriorList', 'shooterList', 'siegeList', 'exchange'])
+    ...mapGetters('battle', ['camp', 'handCardList', 'totalCombat', 'warriorList', 'shooterList', 'siegeList', 'kingCard', 'exchange'])
   },
   async created() {
-    this.beginGameRandomCard()
+    await this.beginGameRandomCard()
+    sendData('start')
   }
 }
 </script>

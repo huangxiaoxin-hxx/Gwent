@@ -39,6 +39,7 @@ import { judgeCardGroup, calculateSpecialNumber } from './utils'
 import Card from '@/components/Card.vue'
 import { setLocalItem, getLocalItem } from '@/indexDB'
 import { mapMutations } from 'vuex'
+import { startSubscribe } from '@/cardRule/getMessage.js'
 export default {
   name: 'SelectCard',
   components: {
@@ -130,6 +131,9 @@ export default {
   async created() {
     this.getStoreData()
     this.setCamp(this.camp)
+  },
+  mounted() {
+    startSubscribe()
   }
 }
 </script>

@@ -2,13 +2,13 @@
   <div class="w-full h-full flex">
     <div class="left w-60 flex items-center">
       <div class="w-60 relative">
-        <div class=" text-right pr-4 text-2xl font-bold absolute right-0">{{ totalCombat }}</div>
-        <KingCard />
+        <div class=" text-right pr-4 text-2xl font-bold absolute right-0">{{ enemyInfo.totalCombat }}</div>
+        <KingCard :kingCard="enemyInfo.kingCard" />
       </div>
     </div>
     <div class="center flex-1 flex flex-col overflow-hidden">
-      <div class="flex-1">
-        <EnemyArea :cardList="enemyInfo.handCardList"/>
+      <div class="flex-1 mb-1">
+        <EnemyArea :handCardList="enemyInfo.handCardList"/>
       </div>
       <div class="flex-1 mb-1">
         <SiegeArea :siegeList="enemyInfo.siegeList" statue="enemy"/>
